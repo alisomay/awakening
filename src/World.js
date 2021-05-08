@@ -42,10 +42,9 @@ export class World {
 
   loadTextures() {
     //setup and load content texture
-    this.contentTexture = new THREE.TextureLoader();
-    this.contentTexture.wrapS = THREE.ClampToEdgeWrapping;
-    this.contentTexture.wrapT = THREE.ClampToEdgeWrapping;
-    this.contentTexture.setPath('./img/face.jpg');
+    this.videoTexture.wrapS = THREE.ClampToEdgeWrapping;
+    this.videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+    // this.contentTexture.setPath('./img/face.jpg');
 
     //load the cubemap
     this.loader = new THREE.CubeTextureLoader();

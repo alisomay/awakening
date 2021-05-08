@@ -14,7 +14,7 @@ ucamUpVector= vec3(0.,0.,1.),
 uCamView= vec3(0.,0.,0.);
 
 float uLightIntensity = 0.15, 
-uRayMaxDistance= 50., 
+uRayMaxDistance= 80., 
 uRefelctionIntensity = 0.75, 
 uRefractionAngle= 0.2, 
 uRefractionIntensity = 0.65;
