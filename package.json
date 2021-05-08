@@ -1,0 +1,50 @@
+{
+  "name": "awakening",
+  "version": "1.0.0",
+  "description": "Awakening, immersive experience from Roz Yuen.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --config build-utils/webpack.config.js --env env=dev",
+    "build": "webpack --config build-utils/webpack.config.js --env env=prod",
+    "build:analyze": "npm run build -- --env addon=bundleanalyze"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisomay/dp-web.git"
+  },
+  "keywords": [
+    "Website",
+    "Roz Yuen",
+    "Awakening"
+  ],
+  "author": "Ali Somay, Lars Ulrich",
+  "bugs": {
+    "url": "https://github.com/alisomay/awakening/issues"
+  },
+  "homepage": "https://github.com/alisomay/awakening#readme",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "three": "^0.125.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "dotenv-webpack": "^6.0.0",
+    "html-webpack-plugin": "^5.0.0",
+    "json-loader": "^0.5.7",
+    "json5-loader": "^4.0.1",
+    "react-hot-loader": "^4.13.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.20.2",
+    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  }
+}
