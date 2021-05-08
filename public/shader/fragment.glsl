@@ -60,7 +60,9 @@ vec4 map(vec3 p){
 
     float box = 0.;
     float x = 8.;
-    float z = x*resolution.y/resolution.x; //x*resolution.y/resolution.x    TODO: FIX RES PROBLEMS
+    float z = x; //x*resolution.y/resolution.x    TODO: FIX RES PROBLEMS
+    //float z = x*resolution.y/resolution.x; //x*resolution.y/resolution.x    TODO: FIX RES PROBLEMS
+
     vec4 disp = displacement(p+vec3(x, 1., 0.));
     float y = disp.x*uDisplace;
     y = clamp(y, 0., 1.);
