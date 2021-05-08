@@ -23,6 +23,15 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.glsl$/,
+        use: ['webpack-glsl-loader'],
+      },
+      { test: /\.(mp4)$/, loader: 'url-loader' },
     ],
   },
   resolve: {
