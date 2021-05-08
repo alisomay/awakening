@@ -42,8 +42,9 @@ export class World {
 
   loadTextures() {
     //setup and load content texture
-    this.videoTexture.wrapS = THREE.ClampToEdgeWrapping;
-    this.videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+    this.videoTexture.wrapS = THREE.RepeatWrapping;
+    this.videoTexture.wrapT = THREE.RepeatWrapping;
+    this.videoTexture.repeat.set(1, 1);
     // this.contentTexture.setPath('./img/face.jpg');
 
     //load the cubemap

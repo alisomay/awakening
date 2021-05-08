@@ -14,7 +14,7 @@ ucamUpVector= vec3(0.,0.,1.),
 uCamView= vec3(0.,0.,0.);
 
 float uLightIntensity = 0.15, 
-uRayMaxDistance= 80., 
+uRayMaxDistance= 50., 
 uRefelctionIntensity = 0.75, 
 uRefractionAngle= 0.2, 
 uRefractionIntensity = 0.65;
@@ -28,7 +28,7 @@ bool depthFlag;
 ///////////////////////////////////////////
 vec4 displacement(vec3 p){
    	//p.x/=resolution.x/resolution.y;
-    vec3 tex = textureLod(tex0, p.xz/12.+vec2(-0.2, 0.55), 0.0).rgb; //p.xz/9
+    vec3 tex = textureLod(tex0, p.xz/18.+vec2(-0., 0.55), 0.0).rgb; //p.xz/9
     tex = clamp(tex, vec3(0.), vec3(1.));
     return vec4(length(tex),tex);
 }
@@ -70,15 +70,17 @@ vec4 map(vec3 p){
 	else
 		box = obox(p, vec3(1.));
 
-  	float cut = p.y-0.25;
-    float bb = sdBox2(vec3(p.xy, p.z)-vec3(0, 0., .0), vec3(7.));
+
+  	float cut = p.y-0.;
+    float bb = sdBox2(vec3(p.xy, p.z), vec3(1.));
   	bb = abs(bb) - 0.21;
 
     float d = smax(cut, bb, 0.01 );
-  	d = smin(d, box, 1.);
+    
+  	d = smin(d, box, 0.2);
     
     //add plane
-    d = smin(d, p.y+y, 2.51);
+   // d = smin(d, p.y, 2.51);
 
   	if(!depthFlag && box < bb){
   		disp.y = p.y;

@@ -67,7 +67,7 @@ export const App = hot(() => {
           left: 0,
         }}
       >
-        <source src="video/snow.mp4" type="video/mp4" />
+        <source src="video/scanning earth.mp4" type="video/mp4" />
       </video>
       <div
         style={{
