@@ -3,13 +3,13 @@ import './reset.css';
 import './App.css';
 import fragment from '../public/shader/fragment.glsl';
 import vertex from '../public/shader/vertex.glsl';
-import tex0 from '../public/img/face.jpg';
+// import tex0 from '../public/img/face.jpg';
 import tex1 from '../public/img/NanoTextile.png';
-
-// import tex0 from '../public/video/snow.mp4';
 
 export class World {
   constructor(options) {
+    this.video = options.videoElement;
+    this.videoTexture = new THREE.VideoTexture(this.video);
     this.scene = new THREE.Scene();
     this.container = options.domElement;
     this.rayCaster = new THREE.Raycaster();
@@ -85,8 +85,7 @@ export class World {
     this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   }
 
-  addObjects(video) {
-    const videoTexture = new THREE.VideoTexture(video);
+  addObjects() {
     this.material = new THREE.ShaderMaterial({
       extensions: {
         derivatives:
@@ -104,7 +103,7 @@ export class World {
         },
         tex0: {
           type: 't',
-          value: new THREE.TextureLoader().load(videoTexture),
+          value: this.videoTexture,
         },
         tex1: { value: new THREE.TextureLoader().load(tex1) },
         skybox: { value: this.textureCube },
@@ -124,6 +123,7 @@ export class World {
 
   play() {
     if (!this.isPlaying) {
+      this.video.play();
       this.render();
       this.isPlaying = true;
     }

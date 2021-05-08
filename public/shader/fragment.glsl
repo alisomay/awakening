@@ -256,6 +256,7 @@ void main( ){
         b+=0.1;
     }
 	gl_FragColor.rgb = col;
-	//gl_FragColor = texture2D(tex0, uv);
+	// gl_FragColor = texture2D(tex0, uv);
+    // gl_FragColor = texture2D(tex0, uv);
 	
 }

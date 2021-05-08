@@ -21,8 +21,11 @@ export const App = hot(() => {
   let player;
 
   useEffect(() => {
-    const world = new World({ domElement: threeRef.current });
-    world.addObjects(videoRef.current);
+    const world = new World({
+      domElement: threeRef.current,
+      videoElement: videoRef.current,
+    });
+    world.addObjects();
     world.resize();
     world.render();
     world.setupListeners();
@@ -34,7 +37,7 @@ export const App = hot(() => {
       console.log('looped');
       videoRef.current.play();
     });
-
+    world.play();
     return () => {};
   }, []);
 
@@ -48,8 +51,6 @@ export const App = hot(() => {
     >
       <video
         ref={videoRef}
-        playsInline
-        webkit-playsinline="true"
         autoPlay
         muted
         className="filtered-video transformed-video"
@@ -110,3 +111,7 @@ export const App = hot(() => {
     </div>
   );
 });
+
+// playsInline;
+// webkit - playsinline = 'true';
+// autoPlay;
