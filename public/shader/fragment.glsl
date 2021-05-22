@@ -1,4 +1,5 @@
 uniform float time;
+uniform vec2 mouse;
 uniform float progress;
 uniform sampler2D tex0, tex1, cubemapTex;
 uniform vec4 resolution;
@@ -191,7 +192,8 @@ void main( ){
   	vec3 rov = normalize(camView-ro);
     vec3 u = normalize(cross(camUp,rov));
   	vec3 v = cross(rov,u);
-  	vec3 rd = normalize(rov + uv.x*u + uv.y*v);
+      // interesting interaction
+  	vec3 rd = normalize(rov + uv.x*u + uv.y*v)*(mouse.x+1.2);
 
     float b = bii;
 
@@ -260,6 +262,7 @@ void main( ){
         b+=0.1;
     }
 	gl_FragColor.rgb = col;
+    
 	// gl_FragColor = texture2D(tex0, uv);
     // gl_FragColor = texture2D(tex0, uv);
 	
