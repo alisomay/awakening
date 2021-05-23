@@ -1,0 +1,20 @@
+
+/* Disable horizontal scroll*/
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-family:'Open Sans', sans-serif;
+    background-color: #000
+}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+@font-face {
+  font-family: "GrandSlang-Roman";
+  src: url("../public/fonts/GrandSlang-Roman.woff2") format("woff2"),
+       url("../public/fonts/GrandSlang-Roman.woff") format("woff");
+}
+
+.app {
+  width:100vw;
+  height:200vh;
+}
