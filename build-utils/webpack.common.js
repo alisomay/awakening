@@ -5,7 +5,22 @@ const { HotModuleReplacementPlugin } = require('webpack');
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.js'),
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+    alias: {
+      'audio-worklet': path.resolve(
+        __dirname,
+        '..',
+        'src/experience/audio-worklet.js',
+      ),
+    },
+  },
   module: {
+    parser: {
+      javascript: {
+        worker: ['AudioWorklet from audio-worklet', '...'],
+      },
+    },
     rules: [
       {
         test: /\.(js|jsx)$/,
@@ -47,23 +62,18 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-  },
+
   output: {
     path: path.resolve(__dirname, '..', 'dist'),
     filename: 'bundle.js',
+    publicPath: '',
   },
   plugins: [
     new HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Desert Petunia',
-      template: path.resolve(__dirname, '..', './public/index.html'),
+      title: 'Awakening',
+      template: path.resolve(__dirname, '..', 'public/index.html'),
     }),
   ],
-  devServer: {
-    contentBase: path.resolve(__dirname, '..', './dist'),
-    hot: true,
-  },
 };

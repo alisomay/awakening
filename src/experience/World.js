@@ -10,6 +10,7 @@ export class World {
     this.videoTexture = new THREE.VideoTexture(this.video);
     this.scene = new THREE.Scene();
     this.container = options.domElement;
+    this.player = options.player;
     this.rayCaster = new THREE.Raycaster();
     this.mouse = new THREE.Vector2();
     this.width = this.container.offsetWidth;
@@ -31,6 +32,15 @@ export class World {
     this.time = 0;
     this.isPlaying = true;
     this.loadTextures();
+
+    this.player.attachLifeCycleListener('onBeat', (levels) => {
+      const [avg, peak] = levels;
+      // console.log(avg / 20, peak / 20);
+      this.material.uniforms.mouse.value = new THREE.Vector2(
+        avg / 20,
+        avg / 20,
+      );
+    });
   }
 
   settings() {
@@ -91,6 +101,7 @@ export class World {
       (event.clientX / window.innerWidth) * 2 - 1,
       -(event.clientY / window.innerHeight) * 2 + 1,
     );
+    //console.log((event.clientX / window.innerWidth) * 2 - 1);
   }
 
   click(click) {

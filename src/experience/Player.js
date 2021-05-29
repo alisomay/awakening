@@ -1,3 +1,5 @@
+import { AudioWorklet } from 'audio-worklet';
+
 export class Player {
   constructor(url) {
     this.buf;
@@ -7,9 +9,13 @@ export class Player {
     this.onStop = () => {};
     this.onStart = () => {};
     this.onPause = () => {};
+    this.onBeatCallbacks = [];
     this.info = null;
     this.audioLoaded = false;
     this.ctx = new AudioContext();
+
+    // After worklet loaded
+
     let context = this.ctx;
     window
       .fetch(url)
@@ -33,9 +39,9 @@ export class Player {
     info = {
       intervalInSecs: 1,
       callback: (totalLength, currentOffset) => {
-        console.log(
-          `Elapsed: ${(currentOffset / totalLength) * 100}`,
-        );
+        // console.log(
+        //   `Elapsed: ${(currentOffset / totalLength) * 100}`,
+        // );
       },
     },
   ) {
@@ -55,6 +61,9 @@ export class Player {
       case 'onPause':
         this.onPause = callback;
         break;
+      case 'onBeat':
+        this.onBeatCallbacks.push(callback);
+        break;
     }
   }
 
@@ -62,62 +71,91 @@ export class Player {
     console.log('Init');
   }
   play() {
-    this.source = this.ctx.createBufferSource();
-    this.source.connect(this.ctx.destination);
-    this.source.buffer = this.buf;
-    this.currentTimeAtPlay = this.ctx.currentTime;
-    this.source.onended = (event) => {
-      console.log(
-        '______END______',
-        // event,
-        'STARTED AT:',
-        this.startedAt,
-        'PAUSED AT: ',
-        this.pausedAt,
-        'CURRENT TIME: ',
-        this.ctx.currentTime,
-      );
-      if (this.paused) {
-        this.onEnded(this.paused);
-      } else {
-        this.stop();
-        this.onEnded();
-      }
-    };
+    this.ctx.audioWorklet
+      .addModule(
+        new AudioWorklet(new URL('./BeatGetter.js', import.meta.url)),
+      )
+      .then(() => {
+        this.analyser = this.ctx.createAnalyser();
+        this.source = this.ctx.createBufferSource();
+        this.source.buffer = this.buf;
+        this.beatGetterWorkletNode = new window.AudioWorkletNode(
+          this.ctx,
+          'beat-getter-processor',
+        );
 
-    console.log('______PLAY______');
-    console.log(
-      // this.source,
-      'STARTED AT:',
-      this.startedAt,
-      'PAUSED AT: ',
-      this.pausedAt,
-      'CURRENT TIME: ',
-      this.ctx.currentTime,
-    );
-    console.log('\n');
+        this.source.connect(this.beatGetterWorkletNode);
+        this.beatGetterWorkletNode.connect(this.analyser);
+        this.analyser.connect(this.ctx.destination);
 
-    this.startedAt = this.ctx.currentTime - this.pausedAt;
-    this.source.start(0, this.pausedAt);
+        //this.beatGetterWorkletNode.connect(this.ctx.destination);
+        this.beatGetterWorkletNode.port.onmessage = (event) => {
+          // Every beat, 139 BPM.
+          this.onBeatCallbacks.forEach((cb) => {
+            cb(this.analyse());
+          });
+        };
 
-    this.monitorFunction = () => {
-      const currentTime = this.getCurrentTime();
-      console.log('CURRENT TIME AT PLAY:', this.currentTimeAtPlay);
-      console.log('CURRENT TIME AT PAUSE:', this.currentTimeAtPause);
-      console.log('SENT TIME:', currentTime);
-      const duration = this.getDuration();
-      this.info.callback(duration, currentTime);
-    };
-    this.monitorFunction();
-    this.monitorInterval = setInterval(
-      this.monitorFunction,
-      this.info.intervalInSecs * 1000,
-    );
+        this.currentTimeAtPlay = this.ctx.currentTime;
+        this.source.onended = (event) => {
+          console.log(
+            '______END______',
+            // event,
+            'STARTED AT:',
+            this.startedAt,
+            'PAUSED AT: ',
+            this.pausedAt,
+            'CURRENT TIME: ',
+            this.ctx.currentTime,
+          );
+          if (this.paused) {
+            this.onEnded(this.paused);
+          } else {
+            this.stop();
+            this.onEnded();
+          }
+        };
 
-    this._playing = true;
-    this.paused = false;
+        console.log('______PLAY______');
+        console.log(
+          // this.source,
+          'STARTED AT:',
+          this.startedAt,
+          'PAUSED AT: ',
+          this.pausedAt,
+          'CURRENT TIME: ',
+          this.ctx.currentTime,
+        );
+        console.log('\n');
 
-    this.onStart();
+        this.startedAt = this.ctx.currentTime - this.pausedAt;
+        this.source.start(0, this.pausedAt);
+
+        this.monitorFunction = () => {
+          const currentTime = this.getCurrentTime();
+          // console.log(
+          //   'CURRENT TIME AT PLAY:',
+          //   this.currentTimeAtPlay,
+          // );
+          // console.log(
+          //   'CURRENT TIME AT PAUSE:',
+          //   this.currentTimeAtPause,
+          // );
+          // console.log('SENT TIME:', currentTime);
+          const duration = this.getDuration();
+          this.info.callback(duration, currentTime);
+        };
+        this.monitorFunction();
+        this.monitorInterval = setInterval(
+          this.monitorFunction,
+          this.info.intervalInSecs * 1000,
+        );
+
+        this._playing = true;
+        this.paused = false;
+
+        this.onStart();
+      });
   }
   pause() {
     console.log('______PAUSE______');
@@ -197,68 +235,31 @@ export class Player {
   getDuration() {
     return this.buf.duration;
   }
+  analyse() {
+    this.analyser.fftSize = 2048;
+    const sampleBuffer = new Float32Array(this.analyser.fftSize);
+
+    this.analyser.getFloatTimeDomainData(sampleBuffer);
+
+    // Compute average power over the interval.
+    let sumOfSquares = 0;
+    for (let i = 0; i < sampleBuffer.length; i++) {
+      sumOfSquares += sampleBuffer[i] ** 2;
+    }
+    const avgPowerDecibels =
+      10 * Math.log10(sumOfSquares / sampleBuffer.length);
+
+    // Compute peak instantaneous power over the interval.
+    let peakInstantaneousPower = 0;
+    for (let i = 0; i < sampleBuffer.length; i++) {
+      const power = sampleBuffer[i] ** 2;
+      peakInstantaneousPower = Math.max(
+        power,
+        peakInstantaneousPower,
+      );
+    }
+    const peakInstantaneousPowerDecibels =
+      10 * Math.log10(peakInstantaneousPower);
+    return [avgPowerDecibels, peakInstantaneousPowerDecibels];
+  }
 }
-
-// function createSound(buffer, context) {
-//   var sourceNode = null,
-//     startedAt = 0,
-//     pausedAt = 0,
-//     playing = false;
-
-//   var play = function () {
-//     var offset = pausedAt;
-
-//     sourceNode = context.createBufferSource();
-//     sourceNode.connect(context.destination);
-//     sourceNode.buffer = buffer;
-//     sourceNode.start(0, offset);
-
-//     startedAt = context.currentTime - offset;
-//     pausedAt = 0;
-//     playing = true;
-//   };
-
-//   var pause = function () {
-//     var elapsed = context.currentTime - startedAt;
-//     stop();
-//     pausedAt = elapsed;
-//   };
-
-//   var stop = function () {
-//     if (sourceNode) {
-//       sourceNode.disconnect();
-//       sourceNode.stop(0);
-//       sourceNode = null;
-//     }
-//     pausedAt = 0;
-//     startedAt = 0;
-//     playing = false;
-//   };
-
-//   var getPlaying = function () {
-//     return playing;
-//   };
-
-//   var getCurrentTime = function () {
-//     if (pausedAt) {
-//       return pausedAt;
-//     }
-//     if (startedAt) {
-//       return context.currentTime - startedAt;
-//     }
-//     return 0;
-//   };
-
-//   var getDuration = function () {
-//     return buffer.duration;
-//   };
-
-//   return {
-//     getCurrentTime: getCurrentTime,
-//     getDuration: getDuration,
-//     getPlaying: getPlaying,
-//     play: play,
-//     pause: pause,
-//     stop: stop,
-//   };
-// }

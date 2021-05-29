@@ -9,7 +9,7 @@ module.exports = {
   ],
   devtool: 'eval-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname, '..', './public'),
+    contentBase: path.resolve(path.join(__dirname, '..', 'public')),
     hot: true,
     host: '0.0.0.0',
   },

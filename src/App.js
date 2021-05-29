@@ -16,16 +16,18 @@ import { Intro } from './intro/Intro';
 // Ensure that page always starts from top.
 $(window).on('beforeunload', function () {
   $(window).scrollTop(0);
+  $(window).scrollTop(0);
 });
 
 export const App = hot(() => {
   const refToExperienceMain = React.createRef();
   const refToStartButton = React.createRef();
   const [init, setInit] = React.useState(false);
-  const initExperience = (threeRef, videoRef) => {
+  const initExperience = (threeRef, videoRef, player) => {
     const world = new World({
       domElement: threeRef.current,
       videoElement: videoRef.current,
+      player,
     });
     world.addObjects();
     world.resize();

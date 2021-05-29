@@ -50,6 +50,8 @@ export const Experience = React.forwardRef(
     ];
     const [videoIdx, setVideoIdx] = useState(0);
     const [replay, setReplay] = useState(false);
+    const [bcVisibility, setBcVisibility] = useState(false);
+    const [avgPeak, setAvgPeak] = useState('');
 
     player.attachLifeCycleListener('onEnded', (paused) => {
       if (!paused) {
@@ -96,7 +98,12 @@ export const Experience = React.forwardRef(
 
     useEffect(() => {
       if (init) {
-        const world = initExperience.call(null, threeRef, videoRef);
+        const world = initExperience.call(
+          null,
+          threeRef,
+          videoRef,
+          player,
+        );
         world.play();
       }
     }, [init]);
@@ -126,6 +133,16 @@ export const Experience = React.forwardRef(
         },
         false,
       );
+
+      player.attachLifeCycleListener('onBeat', (avgPeak) => {
+        setBcVisibility(
+          `rgb(${Math.random() * 255},${Math.random() * 255},${
+            Math.random() * 255
+          })`,
+        );
+        const [avg, peak] = avgPeak;
+        setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
+      });
       return () => {
         // Maybe removal of listeners might be needed
       };
@@ -168,6 +185,19 @@ export const Experience = React.forwardRef(
               }
             }}
           ></Grid>
+          <div
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor: bcVisibility,
+              position: 'absolute',
+              color: 'white',
+              top: 0,
+              left: 0,
+            }}
+          >
+            {avgPeak}
+          </div>
           <Controls
             replay={replay}
             player={player}
