@@ -19,10 +19,13 @@ $(window).on('beforeunload', function () {
   $(window).scrollTop(0);
 });
 
+let lastCreditIndex = 0;
 export const App = hot(() => {
   const refToExperienceMain = React.createRef();
   const refToStartButton = React.createRef();
   const [init, setInit] = React.useState(false);
+  const [creditIndex, setCreditIndex] = React.useState(0);
+
   const initExperience = (threeRef, videoRef, player) => {
     const world = new World({
       domElement: threeRef.current,
@@ -35,6 +38,13 @@ export const App = hot(() => {
     world.setupListeners();
     return world;
   };
+
+  useEffect(() => {
+    setInterval(() => {
+      lastCreditIndex = (lastCreditIndex + 1) % 4;
+      setCreditIndex(lastCreditIndex);
+    }, 1720);
+  }, []);
 
   useEffect(() => {
     const startButton = refToStartButton.current;
@@ -55,16 +65,16 @@ export const App = hot(() => {
 
     return () => {};
   }, []);
-  return (
-    <div className="app">
-      <Intro ref={refToStartButton}></Intro>
-      <Experience
-        ref={refToExperienceMain}
-        initExperience={initExperience}
-        init={init}
-      ></Experience>
-    </div>
-  );
+  // return (
+  //   <div className="app">
+  //     <Intro ref={refToStartButton}></Intro>
+  //     {/* <Experience
+  //       ref={refToExperienceMain}
+  //       initExperience={initExperience}
+  //       init={init}
+  //     ></Experience> */}
+  //   </div>
+  // );
   // return <Experience></Experience>;
-  // return <Credits></Credits>;
+  return <Credits index={creditIndex}></Credits>;
 });

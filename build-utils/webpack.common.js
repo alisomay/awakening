@@ -43,7 +43,7 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.glsl$/,
+        test: /\.(glsl|frag|vert)$/,
         use: ['webpack-glsl-loader'],
       },
       { test: /\.(mp4)$/, loader: 'url-loader' },

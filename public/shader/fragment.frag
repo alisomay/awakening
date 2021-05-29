@@ -15,7 +15,8 @@ ucamUpVector= vec3(0.,0.,1.),
 uCamView= vec3(0.,0.,0.);
 
 float uLightIntensity = 0.15, 
-uRayMaxDistance= 50., 
+// CONTROL 50.
+uRayMaxDistance= 100., 
 uRefelctionIntensity = 0.75, 
 uRefractionAngle= 0.2, 
 uRefractionIntensity = 0.65;
@@ -34,7 +35,8 @@ float obox( vec3 p, vec3 b ){ return length(max(abs(p)-b,0.0));}
 ////////MAP////////////////////////////////
 vec4 map(vec3 p){
     float box = 0.;
-    float x = 64.;
+    // CONTROL REPEATER 8. def
+    float x = 8.;
     float z = x; 
     vec4 d = dsp(p+vec3(x, 1., 0.));
     float y = d.x*uDisplace;
@@ -100,7 +102,7 @@ void main( ){
     float refl_i = uRefelctionIntensity; // reflexion intensity
     float refr_a = uRefractionAngle; // refraction angle
     float refr_i = uRefractionIntensity; // refraction intensity
-    float bii = 1.35; // bright init intensity
+    float bii = 0.35; // bright init intensity
     float marchPrecision = .1; // ray marching tolerance precision
 	vec2 uv = gl_FragCoord.xy / resolution.xy * 2. -1.;
     uv.x*=resolution.x/resolution.y;
@@ -109,7 +111,7 @@ void main( ){
   	vec3 rov = normalize(camView-ro);
     vec3 u = normalize(cross(camUp,rov));
   	vec3 v = cross(rov,u);
-  	vec3 rd = normalize(rov + uv.x*u + uv.y*v);
+  	vec3 rd = normalize(rov + uv.x*u + uv.y*v)*(mouse.x+1.2);
     float b = bii;
     float d = march(ro, rd, prec, maxd, marchPrecision);
 
@@ -158,7 +160,7 @@ void main( ){
 		col = mix(col, map(p).yzw, .5);
 		#endif
 		col = col*0.6 + 0.4*col*col*(3.0-2.0*col);
-		col = mix( col, vec3(dot(col,vec3(0.33))), 0.21 );
+		col = mix( col, vec3(dot(col,vec3(0.33))), 0.1 );
 		col = pow(col,vec3(0.85,0.95,1.0));
     }
     else{

@@ -9,22 +9,24 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignContent: 'center',
     alignItems: 'center',
-    width: '100vw',
-    height: '100vh',
+    // width: '100vw',
+    // height: '100vh',
+    margin: 'auto',
     backgroundColor: '#000',
   },
   headline: {
     color: '#E65E5E',
     fontFamily: 'GrandSlang-Roman',
-    fontSize: 40,
+    fontSize: 47,
     paddingTop: 90,
-    paddingBottom: 20,
+    paddingBottom: 0,
+    marginLeft: 3,
   },
   line: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '300',
     textAlign: 'center',
-    lineHeight: '1.4rem',
+    lineHeight: 1.3,
     marginTop: 24,
     color: '#A7A9AC',
   },
@@ -33,10 +35,22 @@ const useStyles = makeStyles((theme) => ({
     color: '#C7C9CC',
     fontStyle: 'italic',
   },
-  icon: {
-    marginTop: 20,
-    width: '5%',
+  headphones: {
+    marginTop: 50,
+    width: 75,
+    marginLeft: 10,
 
+    '& img': {
+      width: '100%',
+      minWidth: '100%',
+      maxWidth: '100%',
+      height: 'auto',
+    },
+  },
+  icon: {
+    marginTop: 50,
+    width: 40,
+    marginLeft: 20,
     '& img': {
       width: '100%',
       minWidth: '100%',
@@ -48,8 +62,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'pointer',
     },
-    marginTop: 20,
-    width: '20%',
+    marginTop: 70,
+    marginLeft: 15,
+    width: 270,
 
     '& img': {
       width: '100%',
@@ -60,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     marginTop: 40,
-    width: '20%',
+    width: 270,
 
     '& img': {
       width: '100%',
@@ -94,22 +109,21 @@ export const Intro = React.forwardRef((_, ref) => {
         <br /> experience of navigating her identity as an
         Asian-Australian
         <br /> woman living in Berlin during the pandemic.
-        #stopasianhate
-        <br /> #Iamnotavirus
+        <br /> #stopasianhate #Iamnotavirus
       </p>
-      <div className={classes.icon}>
+      <div className={classes.headphones}>
         <img src="img/headphone.png" alt="logo" />
       </div>
       <p className={classes.line}>
         Wear Headphones for the best listening experience
       </p>
-      <div className={classes.icon}>
+      {/* <div className={classes.icon}>
         <img src="img/ok-png.png" alt="logo" />
       </div>
       <p className={classes.line}>
         Drag your mouse cursor in different directions and click to
         alter the visual experience
-      </p>
+      </p> */}
       <div
         ref={ref}
         className={classes.start}

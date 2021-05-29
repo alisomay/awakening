@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import fragment from '../../public/shader/fragment.glsl';
-import vertex from '../../public/shader/vertex.glsl';
+import fragment from '../../public/shader/fragment.frag';
+import vertex from '../../public/shader/vertex.vert';
 import face from '../../public/img/face.jpg';
 import tex1 from '../../public/img/NanoTextile.png';
 
