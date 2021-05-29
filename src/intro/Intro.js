@@ -65,6 +65,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 70,
     marginLeft: 15,
     width: 270,
+    //
+    paddingBottom: 60,
 
     '& img': {
       width: '100%',
@@ -93,7 +95,7 @@ export const Intro = React.forwardRef((_, ref) => {
   );
 
   return (
-    <div className={classes.root}>
+    <div id="intro-container" className={classes.root}>
       <div className={classes.logo}>
         <img src="img/logo.png" alt="logo" />
       </div>

@@ -12,13 +12,13 @@
 } */
 
 /* Crazy Colors sat 10 -80 hue 340 */
-.filtered-video {
+/* .filtered-video {
   filter: brightness(1) saturate(1) invert(0) hue-rotate(0deg) contrast(1.1);
-} 
+}  */
  .transformed-video {
   transform: translateY(-200px);
 }
 
 canvas { 
   transform: scale(2) translate(25%,-25%)  !important;
-}
+}  

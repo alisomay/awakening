@@ -15,6 +15,7 @@ export class World {
     this.mouse = new THREE.Vector2();
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
+    console.log(this.width, this.height);
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
@@ -41,6 +42,12 @@ export class World {
         avg / 20,
       );
     });
+    document
+      .getElementsByTagName('canvas')[0]
+      .removeAttribute('width');
+    document
+      .getElementsByTagName('canvas')[0]
+      .removeAttribute('height');
   }
 
   settings() {

@@ -9,13 +9,36 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignContent: 'center',
+    alignItems: 'center',
     width: '100%',
-    height: '100%',
+    margin: 'auto',
+    backgroundColor: '#000',
+    position: 'relative',
   },
   experience: {
     minWidth: '100%',
-    height: '100%',
+    maxWidth: '100%',
+    alignSelf: 'center',
+    height: '100vh',
+    // height: '80vh',
+  },
+  controls: {
+    position: 'absolute',
+    bottom: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    minWidth: '100%',
+    height: 120,
+    '& > *': {
+      alignSelf: 'center',
+    },
   },
 }));
 
@@ -150,28 +173,13 @@ export const Experience = React.forwardRef(
     const classes = useStyles();
 
     return (
-      <div
-        className="main-container"
-        ref={ref}
-        style={{
-          transform: 'translateY(100vh)',
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: '#000',
-        }}
-      >
-        <Grid
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="center"
-          alignContent="center"
+      <React.Fragment>
+        <div
           className={classes.root}
-          spacing={0}
+          id="experience-container"
+          ref={ref}
         >
-          <Grid
-            item
-            xs={11}
+          <div
             ref={threeRef}
             className={classes.experience}
             onClick={() => {
@@ -184,7 +192,7 @@ export const Experience = React.forwardRef(
                 videoRef.current.load();
               }
             }}
-          ></Grid>
+          ></div>
           <div
             style={{
               width: '100px',
@@ -198,12 +206,14 @@ export const Experience = React.forwardRef(
           >
             {avgPeak}
           </div>
-          <Controls
-            replay={replay}
-            player={player}
-            handleReplayButtonClick={handleReplayButtonClick}
-          ></Controls>
-        </Grid>
+          <div className={classes.controls} id="controls-container">
+            <Controls
+              replay={replay}
+              player={player}
+              handleReplayButtonClick={handleReplayButtonClick}
+            ></Controls>
+          </div>
+        </div>
         <video
           ref={videoRef}
           muted
@@ -223,7 +233,7 @@ export const Experience = React.forwardRef(
         >
           <source src={videos[videoIdx]} type="video/webm" />
         </video>
-      </div>
+      </React.Fragment>
     );
   },
 );

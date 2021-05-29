@@ -13,13 +13,7 @@ import { Credits } from './credits/Credits';
 import { World } from './experience/World';
 import { Intro } from './intro/Intro';
 
-// Ensure that page always starts from top.
-$(window).on('beforeunload', function () {
-  $(window).scrollTop(0);
-  $(window).scrollTop(0);
-});
-
-let lastCreditIndex = 0;
+// let lastCreditIndex = 0;
 export const App = hot(() => {
   const refToExperienceMain = React.createRef();
   const refToStartButton = React.createRef();
@@ -39,17 +33,22 @@ export const App = hot(() => {
     return world;
   };
 
-  useEffect(() => {
-    setInterval(() => {
-      lastCreditIndex = (lastCreditIndex + 1) % 4;
-      setCreditIndex(lastCreditIndex);
-    }, 1720);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     lastCreditIndex = (lastCreditIndex + 1) % 4;
+  //     setCreditIndex(lastCreditIndex);
+  //   }, 1720);
+  // }, []);
 
   useEffect(() => {
     const startButton = refToStartButton.current;
     const page2 = refToExperienceMain.current;
+    $(document).ready(() => {
+      $('#experience-container').css('display', 'none');
+    });
+
     $(startButton).on('click', () => {
+      $('#experience-container').css('display', 'flex');
       $('html, body').animate(
         {
           scrollTop: $(page2).offset().top,
@@ -57,7 +56,11 @@ export const App = hot(() => {
         1600,
         () => {
           setInit(true);
-          // Scroll complete
+          $('html, body')
+            .css('overflow-x', 'hidden')
+            .css('overflow-y', 'hidden');
+          // Scroll Complete
+          // Start exp
           // If we want to change url it is here
         },
       );
@@ -65,16 +68,16 @@ export const App = hot(() => {
 
     return () => {};
   }, []);
-  // return (
-  //   <div className="app">
-  //     <Intro ref={refToStartButton}></Intro>
-  //     {/* <Experience
-  //       ref={refToExperienceMain}
-  //       initExperience={initExperience}
-  //       init={init}
-  //     ></Experience> */}
-  //   </div>
-  // );
+  return (
+    <div className="app">
+      <Intro ref={refToStartButton}></Intro>
+      <Experience
+        ref={refToExperienceMain}
+        initExperience={initExperience}
+        init={init}
+      ></Experience>
+    </div>
+  );
   // return <Experience></Experience>;
-  return <Credits index={creditIndex}></Credits>;
+  // return <Credits index={creditIndex}></Credits>;
 });
