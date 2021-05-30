@@ -1,6 +1,7 @@
 uniform float time;
 uniform float beat1;
 uniform float beat2;
+uniform vec3 uRotation;
 uniform vec2 mouse;
 uniform float progress;
 uniform sampler2D tex0, tex1, cubemapTex;
@@ -9,17 +10,24 @@ varying vec2 vUv;
 varying vec3 vPosition;
 varying vec4 coords;
 uniform samplerCube skybox;	
+uniform float uDisplacementMultiplier;
+uniform float uDistanceToOrigin;
+uniform float uLightIntensity;
+uniform float uRayMaxDistance;
+uniform vec3 uLigthPos;
 
 
-vec3 uLigthPos = vec3(-0.14, 0.1, 0.4);
 float uDisplace = 1.2;
 vec3 uCam = vec3(0.,15.04,0.001), 
 ucamUpVector= vec3(0.,0.,1.), 
 uCamView= vec3(0.,0.,0.);
 
-float uLightIntensity = 0.15, 
+
 // CONTROL 50.
-uRayMaxDistance= 100., 
+
+// uRefelctionIntensity = 0.75, 
+// uRefractionIntensity = 0.65;
+float
 uRefelctionIntensity = 0.75, 
 uRefractionAngle= 0.2, 
 uRefractionIntensity = 0.65;
@@ -36,39 +44,39 @@ vec4 dsp(vec3 p){
 }
 float obox( vec3 p, vec3 b ){ return length(max(abs(p)-b,0.0));}
 ////////MAP////////////////////////////////
-// vec4 map(vec3 p){
-//     float box = 0.;
-//     // CONTROL REPEATER 8. def
-//     float x = 8.;
-//     float z = x; 
-//     vec4 d = dsp(p+vec3(x, 1., 0.));
-//     // Multiplication here is quite interesting
-//     float y = d.x * uDisplace * round(abs(beat2/8.));
-//     box = obox(p, vec3(x,y,z));
-//     return vec4(box, d.yzw);
-// }
-
 vec4 map(vec3 p){
-    float scale = uDisplace;
     float box = 0.;
+    // CONTROL REPEATER 8. def
     float x = 8.;
-    float z = x;
-    vec4 disp = dsp(p+vec3(x,1.,z));
-    float y = disp.x*scale;
-    //y = clamp(y, 0., 1.);
+    float z = x; 
+    vec4 d = dsp(p+vec3(x, 1., 0.));
+    // Multiplication here is quite interesting
+    float y = d.x * uDisplace * (uDisplacementMultiplier + 1.0);
     box = obox(p, vec3(x,y,z));
-    // float cut = p.y-0.25;
-    // float bb = sdBox2(vec3(p.x, p.y*y, p.z)-vec3(0, 0., .0), vec3(5.1));
-    //bb = abs(bb) - 0.21;
-    // float d = smax(cut, bb, 0.1 );
-    //d = smin(d, box, 1.);
-    //add plane
-    //d = smin(d, p.y, 2.51);
-    // if(!depthFlag && box < bb){
-    //     disp.y = p.y;
-    // }
-    return vec4(box, disp.yzw);
+    return vec4(box, d.yzw);
 }
+
+// vec4 map(vec3 p){
+//     float scale = uDisplace;
+//     float box = 0.;
+//     float x = 8.;
+//     float z = x;
+//     vec4 disp = dsp(p+vec3(x,1.,z));
+//     float y = disp.x*scale;
+//     //y = clamp(y, 0., 1.);
+//     box = obox(p, vec3(x,y,z));
+//     // float cut = p.y-0.25;
+//     // float bb = sdBox2(vec3(p.x, p.y*y, p.z)-vec3(0, 0., .0), vec3(5.1));
+//     //bb = abs(bb) - 0.21;
+//     // float d = smax(cut, bb, 0.1 );
+//     //d = smin(d, box, 1.);
+//     //add plane
+//     //d = smin(d, p.y, 2.51);
+//     // if(!depthFlag && box < bb){
+//     //     disp.y = p.y;
+//     // }
+//     return vec4(box, disp.yzw);
+// }
 float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax ){
 	float res = 1.0;
     float t = mint;
@@ -108,7 +116,7 @@ float calcAO( in vec3 pos, in vec3 nor ){
 float march(vec3 ro, vec3 rd, float rmPrec, float maxd, float mapPrec){
     float s = rmPrec;
     float d = 0.;
-    for(int i=0;i<64;i++){
+    for(int i=0;i<512;i++){
         if (s<rmPrec||s>maxd) break;
         s = map(ro+rd*d).x*mapPrec;
         d += s;
@@ -138,11 +146,14 @@ void main( ){
     uv.x*=resolution.x/resolution.y;
     vec3 col = vec3(0.);
 
+
     vec3 ro = vec3(-sin(cam_a), cam_e, cam_a); //
 
     // Will change these for sotation
-    ro.x += 18.7 * cos(time * 0.2);
-    ro.z += 1.7 * sin(time * 0.2);
+    // ro.x += 18.7 * cos(time * 1.);
+    // ro.z += 1.7 * sin(time * 1.);
+    ro.x+=uRotation.x;
+    ro.z+=uRotation.z;
     
 
   	vec3 rov = normalize(camView-ro);
@@ -169,7 +180,9 @@ void main( ){
         float occ = calcAO( p, n );
         vec3  lig = normalize( uLigthPos );
         float amb = clamp( 0.5+0.5*n.y, 0.0, 1.0 );
-        float dif = clamp( dot( n, lig ), 0.0, 1. );
+        //basak
+        //float dif = clamp( dot( n, lig ), 0.0, 1. );
+        float dif = clamp( 0.0, 0.0, 1. );
 	    float bac = clamp( dot( n, normalize(vec3(-lig.x,0.0,-lig.z))), 0.0, 1.0 )*clamp( 1.0-p.y,0.0,1.0);
         float dom = smoothstep( -0.1, 0.1, reflRay.y );
         float fre = pow( clamp(1.0+dot(n,rd),0.0,1.0), 2.0 );
@@ -197,9 +210,9 @@ void main( ){
 		depthFlag = true;
 		col = mix(col, map(p).yzw, .5);
 		#endif
-		col = col*0.6 + 0.4*col*col*(3.0-2.0*col);
+		col = col*0.8 + 0.4*col*col*(3.0-2.0*col);
 		col = mix( col, vec3(dot(col,vec3(0.33))), 0.1 );
-		col = pow(col,vec3(0.85,0.95,1.0));
+		col = pow(col,vec3(1.,1.,1.0));
     }
     else{
         b+=0.1;

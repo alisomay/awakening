@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // let player = new Player(`audio/k.wav`);
-let player = new Player(`audio/met.mp3`);
+let player = new Player(`audio/three_stops.mp3`);
 player.init();
 
 let replayGlobal = false;
@@ -54,9 +54,9 @@ export const Experience = React.forwardRef(
     const videoRef = useRef(null);
 
     const videos = [
-      `video/roz_faster.mp4`,
-      `video/basak_test_1.mp4`,
-      `video/basak_test_2.mp4`,
+      `video/mix-video.mp4`,
+      // `video/basak_test_1.mp4`,
+      // `video/basak_test_2.mp4`,
       // `video/Roz_01.webm`,
       // `video/Roz_02.webm`,
       // `video/Roz_03.webm`,
@@ -162,13 +162,13 @@ export const Experience = React.forwardRef(
       );
 
       player.attachLifeCycleListener('onBeat', (avgPeak) => {
-        setBcVisibility(
-          `rgb(${Math.random() * 255},${Math.random() * 255},${
-            Math.random() * 255
-          })`,
-        );
-        const [avg, peak] = avgPeak;
-        setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
+        // setBcVisibility(
+        //   `rgb(${Math.random() * 255},${Math.random() * 255},${
+        //     Math.random() * 255
+        //   })`,
+        // );
+        // const [avg, peak] = avgPeak;
+        // setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
       });
       return () => {
         // Maybe removal of listeners might be needed
@@ -188,12 +188,12 @@ export const Experience = React.forwardRef(
             className={classes.experience}
             onClick={() => {
               if (player.playing()) {
-                console.log(
-                  'VIDEO CHANGE',
-                  (videoIdx + 1) % videos.length,
-                );
-                setVideoIdx((videoIdx + 1) % videos.length);
-                videoRef.current.load();
+                // console.log(
+                //   'VIDEO CHANGE',
+                //   (videoIdx + 1) % videos.length,
+                // );
+                // setVideoIdx((videoIdx + 1) % videos.length);
+                // videoRef.current.load();
               }
             }}
           ></div>

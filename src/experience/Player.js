@@ -128,10 +128,11 @@ export class Player {
               });
             }
             if (!(this.sixteenthCounter % 16)) {
-              console.log(this.sixteenthCounter);
+              console.log(this.barCounter);
+
               // Every Bar, 139 BPM.
               this.onBarCallbacks.forEach((cb) => {
-                cb(this.analyse());
+                cb(this.analyse(), this.barCounter);
               });
               this.barCounter += 1;
             }

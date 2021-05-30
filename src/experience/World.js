@@ -3,7 +3,6 @@ import fragment from '../../public/shader/fragment.frag';
 import vertex from '../../public/shader/vertex.vert';
 import face from '../../public/img/face.jpg';
 import tex1 from '../../public/img/NanoTextile.png';
-import { RGBA_ASTC_10x5_Format } from 'three';
 
 export class World {
   constructor(options) {
@@ -37,10 +36,63 @@ export class World {
     this.isPlaying = true;
     this.loadTextures();
 
-    this.player.attachLifeCycleListener('onBar', (levels) => {
-      const [avg, peak] = levels;
-      //this.material.uniforms.uDisplacement.value = peak;
-    });
+    this.faceVisible = false;
+
+    this.player.attachLifeCycleListener(
+      'onBar',
+      (levels, barCount) => {
+        if (barCount >= 20 && barCount < 23) {
+          this.faceVisible = true;
+        } else if (barCount >= 38 && barCount < 47) {
+          this.faceVisible = true;
+        } else if (barCount >= 49 && barCount < 52) {
+          this.faceVisible = true;
+        } else if (barCount >= 68 && barCount < 77) {
+          this.faceVisible = true;
+        } else if (barCount >= 98 && barCount < 106) {
+          this.faceVisible = true;
+        } else {
+          this.faceVisible = false;
+        }
+
+        const [avg, peak] = levels;
+        //this.material.uniforms.uDisplacement.value = peak;
+        //7
+        if (this.faceVisible) {
+          this.material.uniforms.uDisplacementMultiplier.value = 1.0;
+        } else {
+          let max = 3.2;
+          let val = 7 + peak / 4;
+          if (val >= max) {
+            val = max;
+          }
+          this.material.uniforms.uDisplacementMultiplier.value = val;
+        }
+        console.log('DEGER: ', 7 + peak / 4);
+        // this.material.uniforms.uLightIntensity.value = 4 + peak / 4;
+        // this.material.uniforms.uRotation.value = new THREE.Vector3(
+        //   avg,
+        //   1.0,
+        //   peak,
+        // );
+        // gsap.to(this.material.uniforms.uLightPos.value, {
+        //   duration: 1.72,
+        //   x: peak,
+        //   onUpdate: function () {
+        //     //console.log(this.targets()[0].value);
+        //   },
+        //   ease: 'bounce.in',
+        // });
+        // gsap.to(this.material.uniforms.uLightPos.value, {
+        //   duration: 1.72,
+        //   z: avg,
+        //   onUpdate: function () {
+        //     //console.log(this.targets()[0].value);
+        //   },
+        //   ease: 'bounce.out',
+        // });
+      },
+    );
     document
       .getElementsByTagName('canvas')[0]
       .removeAttribute('width');
@@ -65,12 +117,12 @@ export class World {
     this.loader = new THREE.CubeTextureLoader();
     this.loader.setPath('img/');
     this.textureCube = this.loader.load([
-      'back.jpg',
-      'down.jpg',
-      'front.jpg',
-      'up.jpg',
-      'left.jpg',
-      'right.jpg',
+      'n_B.png',
+      'n_D.png',
+      'n_L.png',
+      'p_F.png',
+      'p_R.png',
+      'p_U.png',
     ]);
     // 'posx.jpg',
     // 'negx.jpg',
@@ -126,13 +178,17 @@ export class World {
           type: 'f',
           value: 1.0,
         },
+        beat2: {
+          type: 'f',
+          value: 1.0,
+        },
         uRotation: {
           type: 'v3',
-          value: new THREE.Vector3(1.0, 1.0, 1.0),
+          value: new THREE.Vector3(0.0, 0.0, 0.0),
         },
-        uDisplacement: {
+        uDisplacementMultiplier: {
           type: 'f',
-          value: 1.2,
+          value: 1.0,
         },
         uDistanceToOrigin: {
           type: 'f',
@@ -140,7 +196,7 @@ export class World {
         },
         uLightIntensity: {
           type: 'f',
-          value: 1.5,
+          value: 0.0,
         },
         uRayMaxDistance: {
           type: 'f',
@@ -193,7 +249,8 @@ export class World {
 
   render() {
     if (!this.isPlaying) return;
-    this.time += 0.001;
+    this.time += 0.01;
+    // console.log(this.time);
     this.material.uniforms.time.value = this.time;
     this.material.uniforms.resolution.value = new THREE.Vector4(
       this.width,
