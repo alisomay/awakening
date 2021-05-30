@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // let player = new Player(`audio/k.wav`);
-let player = new Player(`audio/three_stops.mp3`);
+let player = new Player(`audio/met.mp3`);
 player.init();
 
 let replayGlobal = false;
@@ -54,18 +54,21 @@ export const Experience = React.forwardRef(
     const videoRef = useRef(null);
 
     const videos = [
+      `video/roz_faster.mp4`,
+      `video/basak_test_1.mp4`,
+      `video/basak_test_2.mp4`,
       // `video/Roz_01.webm`,
       // `video/Roz_02.webm`,
       // `video/Roz_03.webm`,
       // `video/Roz_04.webm`,
-      `video/Roz_05.webm`,
-      `video/Roz_06.webm`,
-      `video/Roz_07.webm`,
-      `video/Roz_08.webm`,
+      // `video/Roz_05.webm`,
+      // `video/Roz_06.webm`,
+      // `video/Roz_07.webm`,
+      // `video/Roz_08.webm`,
       // `video/Roz_09.webm`,
       // `video/Roz_10.webm`,
       // `video/Roz_11.webm`,
-      `video/Roz_12.webm`,
+      // `video/Roz_12.webm`,
       // `video/Train_01.webm`,
       // `video/Train_02.webm`,
       // `video/Train_03.webm`,
@@ -96,6 +99,7 @@ export const Experience = React.forwardRef(
     };
     let spaceBarPressedBefore = false;
     const handleSpaceBar = () => {
+      player.socket.emit('space');
       if (spaceBarPressedBefore) {
         console.log('');
         if (player) {
@@ -231,7 +235,7 @@ export const Experience = React.forwardRef(
             left: 0,
           }}
         >
-          <source src={videos[videoIdx]} type="video/webm" />
+          <source src={videos[videoIdx]} type="video/mp4" />
         </video>
       </React.Fragment>
     );

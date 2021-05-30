@@ -3,10 +3,13 @@ import fragment from '../../public/shader/fragment.frag';
 import vertex from '../../public/shader/vertex.vert';
 import face from '../../public/img/face.jpg';
 import tex1 from '../../public/img/NanoTextile.png';
+import { RGBA_ASTC_10x5_Format } from 'three';
 
 export class World {
   constructor(options) {
     this.video = options.videoElement;
+    this.currentPeak = 0;
+    this.lastPeak = 0;
     this.videoTexture = new THREE.VideoTexture(this.video);
     this.scene = new THREE.Scene();
     this.container = options.domElement;
@@ -34,13 +37,9 @@ export class World {
     this.isPlaying = true;
     this.loadTextures();
 
-    this.player.attachLifeCycleListener('onBeat', (levels) => {
+    this.player.attachLifeCycleListener('onBar', (levels) => {
       const [avg, peak] = levels;
-      // console.log(avg / 20, peak / 20);
-      this.material.uniforms.mouse.value = new THREE.Vector2(
-        avg / 20,
-        avg / 20,
-      );
+      //this.material.uniforms.uDisplacement.value = peak;
     });
     document
       .getElementsByTagName('canvas')[0]
@@ -123,6 +122,34 @@ export class World {
       },
       side: THREE.DoubleSide,
       uniforms: {
+        beat1: {
+          type: 'f',
+          value: 1.0,
+        },
+        uRotation: {
+          type: 'v3',
+          value: new THREE.Vector3(1.0, 1.0, 1.0),
+        },
+        uDisplacement: {
+          type: 'f',
+          value: 1.2,
+        },
+        uDistanceToOrigin: {
+          type: 'f',
+          value: 1,
+        },
+        uLightIntensity: {
+          type: 'f',
+          value: 1.5,
+        },
+        uRayMaxDistance: {
+          type: 'f',
+          value: 100.0,
+        },
+        uLightPos: {
+          type: 'v3',
+          value: new THREE.Vector3(-0.14, 0.1, 0.4),
+        },
         mouse: {
           type: 'v2',
           value: new THREE.Vector2(this.mouse.x, this.mouse.y),
@@ -169,20 +196,33 @@ export class World {
     this.time += 0.001;
     this.material.uniforms.time.value = this.time;
     this.material.uniforms.resolution.value = new THREE.Vector4(
-      this.container.offsetWidth,
-      this.container.offsetHeight,
+      this.width,
+      this.height,
       0,
-      0,
+      1,
     );
+
+    // if (this.lastPeak < this.currentPeak) {
+    //   this.lastPeak += 0.1;
+    //   this.material.uniforms.beat2.value = this.lastPeak;
+    //   if (this.lastPeak > this.currentPeak) {
+    //     this.lastPeak = this.currentPeak;
+    //   }
+    // }
+    // if (this.lastPeak > this.currentPeak) {
+    //   this.lastPeak -= 0.1;
+    //   this.material.uniforms.beat2.value = this.lastPeak;
+    //   if (this.lastPeak < this.currentPeak) {
+    //     this.lastPeak = this.currentPeak;
+    //   }
+    // }
+    // this.material.uniforms.beat2.value = THREE.MathUtils.lerp(
+    //   this.material.uniforms.beat2.value,
+    //   this.currentPeak,
+    //   0.01,
+    // );
+
     requestAnimationFrame(this.render.bind(this));
     this.renderer.render(this.scene, this.camera);
   }
-
-  //   // Check intersection
-  // rayCaster.setFromCamera(mouse, camera);
-  // const intersection = rayCaster.intersectObject(cube);
-  // if (intersection.length > 0) {
-  // }
-  // else {
-  // }
 }

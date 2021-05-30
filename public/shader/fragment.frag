@@ -1,4 +1,6 @@
 uniform float time;
+uniform float beat1;
+uniform float beat2;
 uniform vec2 mouse;
 uniform float progress;
 uniform sampler2D tex0, tex1, cubemapTex;
@@ -7,6 +9,7 @@ varying vec2 vUv;
 varying vec3 vPosition;
 varying vec4 coords;
 uniform samplerCube skybox;	
+
 
 vec3 uLigthPos = vec3(-0.14, 0.1, 0.4);
 float uDisplace = 1.2;
@@ -33,15 +36,38 @@ vec4 dsp(vec3 p){
 }
 float obox( vec3 p, vec3 b ){ return length(max(abs(p)-b,0.0));}
 ////////MAP////////////////////////////////
+// vec4 map(vec3 p){
+//     float box = 0.;
+//     // CONTROL REPEATER 8. def
+//     float x = 8.;
+//     float z = x; 
+//     vec4 d = dsp(p+vec3(x, 1., 0.));
+//     // Multiplication here is quite interesting
+//     float y = d.x * uDisplace * round(abs(beat2/8.));
+//     box = obox(p, vec3(x,y,z));
+//     return vec4(box, d.yzw);
+// }
+
 vec4 map(vec3 p){
+    float scale = uDisplace;
     float box = 0.;
-    // CONTROL REPEATER 8. def
     float x = 8.;
-    float z = x; 
-    vec4 d = dsp(p+vec3(x, 1., 0.));
-    float y = d.x*uDisplace;
+    float z = x;
+    vec4 disp = dsp(p+vec3(x,1.,z));
+    float y = disp.x*scale;
+    //y = clamp(y, 0., 1.);
     box = obox(p, vec3(x,y,z));
-    return vec4(box, d.yzw);
+    // float cut = p.y-0.25;
+    // float bb = sdBox2(vec3(p.x, p.y*y, p.z)-vec3(0, 0., .0), vec3(5.1));
+    //bb = abs(bb) - 0.21;
+    // float d = smax(cut, bb, 0.1 );
+    //d = smin(d, box, 1.);
+    //add plane
+    //d = smin(d, p.y, 2.51);
+    // if(!depthFlag && box < bb){
+    //     disp.y = p.y;
+    // }
+    return vec4(box, disp.yzw);
 }
 float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax ){
 	float res = 1.0;
@@ -56,6 +82,7 @@ float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax ){
 }
 
 vec3 calcNormal( in vec3 pos ){
+    // y value interesting
 	vec3 eps = vec3( 0.05, 0.0, 0.0 );
 	vec3 nor = vec3(
 	    map(pos+eps.xyy).x - map(pos-eps.xyy).x,
@@ -90,13 +117,16 @@ float march(vec3 ro, vec3 rd, float rmPrec, float maxd, float mapPrec){
 }
 
 void main( ){
-
+    
+    // CAM
     float cam_a = uCam.x; // angle z
     float cam_e = uCam.y; // elevation
     float cam_d = uCam.z; // distance to origin axis
+    
     vec3 camUp=ucamUpVector;//Change camere up vector here
   	vec3 camView=uCamView; //Change camere view here
-  	float li = uLightIntensity; // light intensity
+  	
+    float li = uLightIntensity; // light intensity
     float prec = 0.0000001; // ray marching precision
     float maxd = uRayMaxDistance; // ray marching distance max
     float refl_i = uRefelctionIntensity; // reflexion intensity
@@ -107,13 +137,21 @@ void main( ){
 	vec2 uv = gl_FragCoord.xy / resolution.xy * 2. -1.;
     uv.x*=resolution.x/resolution.y;
     vec3 col = vec3(0.);
+
     vec3 ro = vec3(-sin(cam_a), cam_e, cam_a); //
+
+    // Will change these for sotation
+    ro.x += 18.7 * cos(time * 0.2);
+    ro.z += 1.7 * sin(time * 0.2);
+    
+
   	vec3 rov = normalize(camView-ro);
     vec3 u = normalize(cross(camUp,rov));
   	vec3 v = cross(rov,u);
-  	vec3 rd = normalize(rov + uv.x*u + uv.y*v)*(mouse.x+1.2);
+    // Interesting interaction (2.5 keeps it sharp with no repetition)
+  	vec3 rd = normalize(rov + uv.x*u + uv.y*v)*2.5;
     float b = bii;
-    float d = march(ro, rd, prec, maxd, marchPrecision);
+    float d = march(ro, rd, prec, maxd , marchPrecision);
 
     if (d<maxd){
         vec2 e = vec2(-1., 1.)*0.005;
