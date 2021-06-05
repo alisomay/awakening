@@ -13,4 +13,9 @@ module.exports = {
     hot: true,
     host: '0.0.0.0',
   },
+  output: {
+    path: path.resolve(__dirname, '..', 'dist'),
+    filename: 'bundle.js',
+    publicPath: '',
+  },
 };

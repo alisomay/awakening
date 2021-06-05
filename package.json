@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alisomay/dp-web.git"
+    "url": "git+https://github.com/alisomay/awakening.git"
   },
   "keywords": [
     "Website",
     "Roz Yuen",
     "Awakening"
   ],
-  "author": "Ali Somay, Lars Ulrich",
+  "author": "Ali Somay",
   "bugs": {
     "url": "https://github.com/alisomay/awakening/issues"
   },

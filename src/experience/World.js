@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import fragment from '../../public/shader/fragment.frag';
 import vertex from '../../public/shader/vertex.vert';
-import face from '../../public/img/face.jpg';
 import tex1 from '../../public/img/NanoTextile.png';
 
 export class World {
@@ -111,7 +110,6 @@ export class World {
     this.videoTexture.wrapS = THREE.RepeatWrapping;
     this.videoTexture.wrapT = THREE.RepeatWrapping;
     this.videoTexture.repeat.set(1, 1);
-    // this.contentTexture.setPath('./img/face.jpg');
 
     //load the cubemap
     this.loader = new THREE.CubeTextureLoader();
@@ -223,7 +221,6 @@ export class World {
           value: this.videoTexture,
         },
         tex1: { value: new THREE.TextureLoader().load(tex1) },
-        tex2: { value: new THREE.TextureLoader().load(face) },
         skybox: { value: this.textureCube },
       },
       vertexShader: vertex,
