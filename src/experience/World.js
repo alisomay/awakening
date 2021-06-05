@@ -113,7 +113,7 @@ export class World {
 
     //load the cubemap
     this.loader = new THREE.CubeTextureLoader();
-    this.loader.setPath('img/');
+    this.loader.setPath('public/img/');
     this.textureCube = this.loader.load([
       'n_B.png',
       'n_D.png',

@@ -91,13 +91,13 @@ const useStyles = makeStyles((theme) => ({
 export const Intro = React.forwardRef((_, ref) => {
   const classes = useStyles();
   const [startImageSrc, setStartImageSrc] = useState(
-    'img/start-melon.png',
+    'public/img/start-melon.png',
   );
 
   return (
     <div id="intro-container" className={classes.root}>
       <div className={classes.logo}>
-        <img src="img/logo.png" alt="logo" />
+        <img src="public/img/logo.png" alt="logo" />
       </div>
       <h1 className={classes.headline}>AWAKENING</h1>
       <p className={classes.line}>
@@ -114,7 +114,7 @@ export const Intro = React.forwardRef((_, ref) => {
         <br /> #stopasianhate #Iamnotavirus
       </p>
       <div className={classes.headphones}>
-        <img src="img/headphone.png" alt="logo" />
+        <img src="public/img/headphone.png" alt="logo" />
       </div>
       <p className={classes.line}>
         Wear Headphones for the best listening experience
@@ -130,10 +130,10 @@ export const Intro = React.forwardRef((_, ref) => {
         ref={ref}
         className={classes.start}
         onMouseEnter={() => {
-          setStartImageSrc('img/start-gray.png');
+          setStartImageSrc('public/img/start-gray.png');
         }}
         onMouseLeave={() => {
-          setStartImageSrc('img/start-melon.png');
+          setStartImageSrc('public/img/start-melon.png');
         }}
       >
         <img src={startImageSrc} alt="logo" />

@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // let player = new Player(`audio/k.wav`);
-let player = new Player(`audio/three_stops.mp3`);
+let player = new Player(`public/audio/three_stops.mp3`);
 player.init();
 
 let replayGlobal = false;
@@ -54,7 +54,7 @@ export const Experience = React.forwardRef(
     const videoRef = useRef(null);
 
     const videos = [
-      `video/mix-video.mp4`,
+      `public/video/mix-video.mp4`,
       // `video/basak_test_1.mp4`,
       // `video/basak_test_2.mp4`,
       // `video/Roz_01.webm`,
