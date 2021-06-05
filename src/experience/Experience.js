@@ -55,7 +55,7 @@ if (!isMobile) {
   var player = new Player(`public/audio/three_stops.mp3`);
   player.init();
 
-  let replayGlobal = false;
+  var replayGlobal = false;
 }
 
 export const Experience = React.forwardRef(
