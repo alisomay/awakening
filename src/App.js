@@ -12,6 +12,7 @@ import { Experience } from './experience/Experience';
 import { Credits } from './credits/Credits';
 import { World } from './experience/World';
 import { Intro } from './intro/Intro';
+import { MobileBlock } from './mobile-block/MobileBlock';
 import {
   BrowserView,
   MobileView,
@@ -86,10 +87,7 @@ export const App = () => {
         ></Experience>
       </BrowserView>
       <MobileView>
-        <h1> This is rendered only on mobile </h1>
-        <h1> This is rendered only on mobile </h1>
-        <h1> This is rendered only on mobile </h1>
-        <h1> This is rendered only on mobile </h1>
+        <MobileBlock></MobileBlock>
       </MobileView>
     </div>
   );
