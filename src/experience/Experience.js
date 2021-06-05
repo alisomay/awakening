@@ -48,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
+console.log(!isMobile);
 // Breaks rendering on IOS, this is why it is blocked.
 if (!isMobile) {
   // let player = new Player(`audio/k.wav`);
-  let player = new Player(`public/audio/three_stops.mp3`);
+  var player = new Player(`public/audio/three_stops.mp3`);
   player.init();
 
   let replayGlobal = false;
