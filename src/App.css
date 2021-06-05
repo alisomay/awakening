@@ -13,7 +13,10 @@ html, body {
   src: url("../public/fonts/GrandSlang-Roman.woff2") format("woff2"),
        url("../public/fonts/GrandSlang-Roman.woff") format("woff");
 }
-
+h1 {
+  color: white;
+  font-size: 52px;
+}
 .app {
   width:100vw;
 }

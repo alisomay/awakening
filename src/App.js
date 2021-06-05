@@ -12,9 +12,15 @@ import { Experience } from './experience/Experience';
 import { Credits } from './credits/Credits';
 import { World } from './experience/World';
 import { Intro } from './intro/Intro';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from 'react-device-detect';
 
 // let lastCreditIndex = 0;
-export const App = hot(() => {
+export const App = () => {
   const refToExperienceMain = React.createRef();
   const refToStartButton = React.createRef();
   const [init, setInit] = React.useState(false);
@@ -68,16 +74,26 @@ export const App = hot(() => {
 
     return () => {};
   }, []);
+
   return (
     <div className="app">
-      <Intro ref={refToStartButton}></Intro>
-      <Experience
-        ref={refToExperienceMain}
-        initExperience={initExperience}
-        init={init}
-      ></Experience>
+      <BrowserView>
+        <Intro ref={refToStartButton}></Intro>
+        <Experience
+          ref={refToExperienceMain}
+          initExperience={initExperience}
+          init={init}
+        ></Experience>
+      </BrowserView>
+      <MobileView>
+        <h1> This is rendered only on mobile </h1>
+        <h1> This is rendered only on mobile </h1>
+        <h1> This is rendered only on mobile </h1>
+        <h1> This is rendered only on mobile </h1>
+      </MobileView>
     </div>
   );
+
   // return <Experience></Experience>;
   // return <Credits index={creditIndex}></Credits>;
-});
+};
