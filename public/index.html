@@ -1,15 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta
+      name="description"
+      content="Awakening is an audio-visual experience of the upcoming album of Rox Yuen"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
+
+    <meta property="og:title" content="Awakening" />
+    <meta
+      property="og:description"
+      content="Awakening is an audio-visual experience of the upcoming album of Rox Yuen"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://awakening.rozyuen.com/public"
+    />
+    <meta property="og:image" content="" />
+
+    <!-- <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta name="theme-color" content="#000"> -->
     <script src="https://unpkg.com/@free-side/audioworklet-polyfill/dist/audioworklet-polyfill.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
     <script>
       history.scrollRestoration = 'manual';
     </script>
   </head>
+
   <body>
     <div id="root"></div>
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <!-- <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script> -->
   </body>
 </html>
