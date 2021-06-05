@@ -76,9 +76,9 @@ export const MobileBlock = () => {
       </p>
       <a
         href="https://rozyuen.com"
-        onClick={() => {
-          setImgSrc('public/img/back-grey.png');
-        }}
+        // onClick={() => {
+        //   setImgSrc('public/img/back-grey.png');
+        // }}
         className={classes.back}
       >
         <img src={imgSrc} alt="back_button" />
