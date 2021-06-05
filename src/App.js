@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root';
 import $ from 'jquery';
 import React, {
   useCallback,
@@ -22,6 +21,7 @@ import {
 
 // let lastCreditIndex = 0;
 export const App = () => {
+  // return <div className="mob">RENDERS</div>;
   const refToExperienceMain = React.createRef();
   const refToStartButton = React.createRef();
   const [init, setInit] = React.useState(false);

@@ -13,8 +13,14 @@ html, body {
   src: url("../public/fonts/GrandSlang-Roman.woff2") format("woff2"),
        url("../public/fonts/GrandSlang-Roman.woff") format("woff");
 }
-.app {
+/* .app {
   width:100vw;
-} 
+}  */
+.mob {
+  color:white;
+  font-size:100px;
+  margin-top:500px;
+  text-align: center;
+}
 
 

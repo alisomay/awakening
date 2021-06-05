@@ -7,6 +7,13 @@ import { Controls } from '../controls/Controls';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from 'react-device-detect';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -42,11 +49,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// let player = new Player(`audio/k.wav`);
-let player = new Player(`public/audio/three_stops.mp3`);
-player.init();
+// Breaks rendering on IOS, this is why it is blocked.
+if (!isMobile) {
+  // let player = new Player(`audio/k.wav`);
+  let player = new Player(`public/audio/three_stops.mp3`);
+  player.init();
 
-let replayGlobal = false;
+  let replayGlobal = false;
+}
 
 export const Experience = React.forwardRef(
   ({ initExperience, init }, ref) => {
