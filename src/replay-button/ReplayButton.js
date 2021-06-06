@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   iconRoot: {
+    zIndex: 9999999,
     width: '80%',
     textAlign: 'center',
     transform: 'scale(4) translateY(-10px)',
