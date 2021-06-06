@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,8 +8,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignContent: 'center',
     alignItems: 'center',
-    // width: '100vw',
-    // height: '100vh',
     margin: 'auto',
     backgroundColor: '#000',
   },
@@ -119,13 +116,12 @@ export const Intro = React.forwardRef((_, ref) => {
       <p className={classes.line}>
         Wear Headphones for the best listening experience
       </p>
-      {/* <div className={classes.icon}>
-        <img src="img/ok-png.png" alt="logo" />
+      <div className={classes.icon}>
+        <img src="public/img/ok-png.png" alt="logo" />
       </div>
       <p className={classes.line}>
-        Drag your mouse cursor in different directions and click to
-        alter the visual experience
-      </p> */}
+        Move your mouse cursor in different directions to interact
+      </p>
       <div
         ref={ref}
         className={classes.start}

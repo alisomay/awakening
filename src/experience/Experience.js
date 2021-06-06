@@ -1,19 +1,11 @@
-import { hot } from 'react-hot-loader/root';
 import React, { useEffect, useRef, useState } from 'react';
 import './Experience.css';
-import { World } from './World';
 import { Player } from './Player';
 import { Controls } from '../controls/Controls';
 import { Credits } from '../credits/Credits';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import $ from 'jquery';
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 
 var tl = gsap.timeline({ repeat: 90, yoyo: true, paused: true });
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     alignSelf: 'center',
     height: '100vh',
-    // height: '80vh',
   },
   controls: {
     position: 'absolute',
@@ -50,10 +41,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-console.log(!isMobile);
+// console.log(!isMobile);
 // Breaks rendering on IOS, this is why it is blocked.
 if (!isMobile) {
-  // let player = new Player(`audio/k.wav`);
   var player = new Player(`public/audio/three_stops.mp3`);
   player.init();
 
@@ -101,9 +91,7 @@ export const Experience = React.forwardRef(
     };
     let spaceBarPressedBefore = false;
     const handleSpaceBar = () => {
-      // player.socket.emit('space');
       if (spaceBarPressedBefore) {
-        console.log('');
         if (player) {
           if (player.playing() && player.ready()) {
             // player.pause();
@@ -174,7 +162,7 @@ export const Experience = React.forwardRef(
 
       videoRef.current.addEventListener('ended', () => {
         // Catch ending loop vid
-        console.log('looped');
+        // console.log('looped');
         videoRef.current.play();
       });
       videoRef.current.addEventListener(
@@ -210,20 +198,7 @@ export const Experience = React.forwardRef(
           id="experience-container"
           ref={ref}
         >
-          <div
-            ref={threeRef}
-            className={classes.experience}
-            onClick={() => {
-              if (player.playing()) {
-                // console.log(
-                //   'VIDEO CHANGE',
-                //   (videoIdx + 1) % videos.length,
-                // );
-                // setVideoIdx((videoIdx + 1) % videos.length);
-                // videoRef.current.load();
-              }
-            }}
-          >
+          <div ref={threeRef} className={classes.experience}>
             <div id="loading"></div>
             <Credits index={creditIndex} show={showCredits}></Credits>
           </div>

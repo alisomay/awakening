@@ -1,8 +1,6 @@
 import { AudioWorklet } from 'audio-worklet';
-import io from 'socket.io-client';
 export class Player {
   constructor(url) {
-    // this.socket = io(`http://localhost:3000`);
     this.buf;
     this.onEndedCallbacks = [
       () => {
@@ -32,7 +30,7 @@ export class Player {
       .then((response) => response.arrayBuffer())
       .then((arrayBuffer) => context.decodeAudioData(arrayBuffer))
       .then((audioBuffer) => {
-        console.log('Audio Loaded');
+        // console.log('Audio Loaded');
         this.audioLoaded = true;
         this.buf = audioBuffer;
       });
@@ -93,7 +91,7 @@ export class Player {
   }
 
   init() {
-    console.log('Init');
+    // console.log('Init');
   }
   play(replaying) {
     this.worldRef.play(replaying);
@@ -101,7 +99,7 @@ export class Player {
     this.sixteenthCounter = 0;
     this.barCounter = 0;
     this.beatCounter = 0;
-    console.log(this.ctx.audioWorklet);
+    // console.log(this.ctx.audioWorklet);
     this.ctx.audioWorklet
       .addModule(
         new AudioWorklet(new URL('./BeatGetter.js', import.meta.url)),
@@ -137,7 +135,7 @@ export class Player {
               });
             }
             if (!(this.sixteenthCounter % 16)) {
-              console.log(this.barCounter);
+              // console.log(this.barCounter);
 
               // Every Bar, 139 BPM.
               this.onBarCallbacks.forEach((cb) => {
@@ -153,10 +151,10 @@ export class Player {
               if (this.barCounter === 108) {
                 this.setCreditIndex(1);
               }
-              if (this.barCounter === 110) {
+              if (this.barCounter === 111) {
                 this.setCreditIndex(2);
               }
-              if (this.barCounter === 112) {
+              if (this.barCounter === 114) {
                 this.setCreditIndex(3);
               }
 
@@ -179,16 +177,16 @@ export class Player {
 
         this.currentTimeAtPlay = this.ctx.currentTime;
         this.source.onended = (event) => {
-          console.log(
-            '______END______',
-            // event,
-            'STARTED AT:',
-            this.startedAt,
-            'PAUSED AT: ',
-            this.pausedAt,
-            'CURRENT TIME: ',
-            this.ctx.currentTime,
-          );
+          // console.log(
+          //   '______END______',
+          //   // event,
+          //   'STARTED AT:',
+          //   this.startedAt,
+          //   'PAUSED AT: ',
+          //   this.pausedAt,
+          //   'CURRENT TIME: ',
+          //   this.ctx.currentTime,
+          // );
           if (this.paused) {
             this.onEndedCallbacks.forEach((cb) => {
               cb(this.paused);
@@ -246,23 +244,23 @@ export class Player {
     this.barCounter = 0;
     this.beatCounter = 0;
     this.sixteenthCounter = 0;
-    console.log('______PAUSE______');
-    console.log(
-      // this.source,
-      'CURRENT TIME: ',
-      this.ctx.currentTime,
-    );
-    console.log('\n');
+    // console.log('______PAUSE______');
+    // console.log(
+    //   // this.source,
+    //   'CURRENT TIME: ',
+    //   this.ctx.currentTime,
+    // );
+    // console.log('\n');
     let elapsed = this.ctx.currentTime - this.startedAt;
     this.stop(true);
     this.pausedAt = elapsed;
     this.currentTimeAtPause = this.ctx.currentTime;
-    console.log(
-      'STARTED AT:',
-      this.startedAt,
-      'PAUSED AT: ',
-      this.pausedAt,
-    );
+    // console.log(
+    //   'STARTED AT:',
+    //   this.startedAt,
+    //   'PAUSED AT: ',
+    //   this.pausedAt,
+    // );
     this._playing = false;
     this.paused = true;
 
@@ -286,16 +284,16 @@ export class Player {
       this.beatGetterWorkletNode = null;
     }
     if (!paused) {
-      console.log(
-        'Stop',
-        // this.source,
-        'STARTED AT:',
-        this.startedAt,
-        'PAUSED AT: ',
-        this.pausedAt,
-        'CURRENT TIME: ',
-        this.ctx.currentTime,
-      );
+      // console.log(
+      //   'Stop',
+      //   // this.source,
+      //   'STARTED AT:',
+      //   this.startedAt,
+      //   'PAUSED AT: ',
+      //   this.pausedAt,
+      //   'CURRENT TIME: ',
+      //   this.ctx.currentTime,
+      // );
     }
 
     this.startedAt = 0;

@@ -17,7 +17,7 @@ export class World {
     this.mouse = new THREE.Vector2();
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
-    console.log(this.width, this.height);
+    // console.log(this.width, this.height);
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.width, this.height);
@@ -61,7 +61,7 @@ export class World {
     this.player.attachLifeCycleListener(
       'onBar',
       (levels, barCount) => {
-        console.log('BAR : ', barCount);
+        // console.log('BAR : ', barCount);
         if (!this.replaying) {
           if (barCount >= 20 && barCount < 23) {
             this.faceVisible = true;
@@ -93,8 +93,6 @@ export class World {
         }
 
         const [avg, peak] = levels;
-        //this.material.uniforms.uDisplacement.value = peak;
-        //7
         if (this.faceVisible) {
           this.material.uniforms.uDisplacementMultiplier.value = 0.0;
         } else {
@@ -105,29 +103,6 @@ export class World {
           }
           this.material.uniforms.uDisplacementMultiplier.value = val;
         }
-        console.log('DEGER: ', 7 + peak / 4);
-        // this.material.uniforms.uLightIntensity.value = 4 + peak / 4;
-        // this.material.uniforms.uRotation.value = new THREE.Vector3(
-        //   avg,
-        //   1.0,
-        //   peak,
-        // );
-        // gsap.to(this.material.uniforms.uLightPos.value, {
-        //   duration: 1.72,
-        //   x: peak,
-        //   onUpdate: function () {
-        //     //console.log(this.targets()[0].value);
-        //   },
-        //   ease: 'bounce.in',
-        // });
-        // gsap.to(this.material.uniforms.uLightPos.value, {
-        //   duration: 1.72,
-        //   z: avg,
-        //   onUpdate: function () {
-        //     //console.log(this.targets()[0].value);
-        //   },
-        //   ease: 'bounce.out',
-        // });
       },
     );
     document
@@ -160,12 +135,6 @@ export class World {
       'p_R.png',
       'p_U.png',
     ]);
-    // 'posx.jpg',
-    // 'negx.jpg',
-    // 'posy.jpg',
-    // 'negy.jpg',
-    // 'posz.jpg',
-    // 'negz.jpg',
   }
 
   scale(unscaledNum, minAllowed, maxAllowed, min, max) {
@@ -207,27 +176,11 @@ export class World {
       0,
       1,
     );
-    // calculate mouse position in normalized device coordinates
-    // (-1 to +1) for both components
-    // this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    // this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    // // console.log(this.mouse.x, this.mouse.y);
-    // this.material.uniforms.mouse.value = new THREE.Vector2(
-    //   (event.clientX / window.innerWidth) * 2 - 1,
-    //   -(event.clientY / window.innerHeight) * 2 + 1,
-    // );
     this.material.uniforms.uRotation.value = new THREE.Vector3(
-      // (event.clientX / window.innerWidth) * 2 - 0.2,
-      // -(event.clientY / window.innerHeight) * 2 + 0.2,
       this.mouse.x * 20,
       0.0,
       this.mouse.y * 20,
     );
-    // console.log('HEY,', this.mouse.y);
-  }
-
-  click(click) {
-    //
   }
 
   addObjects() {
@@ -332,26 +285,6 @@ export class World {
       0,
       1,
     );
-
-    // if (this.lastPeak < this.currentPeak) {
-    //   this.lastPeak += 0.1;
-    //   this.material.uniforms.beat2.value = this.lastPeak;
-    //   if (this.lastPeak > this.currentPeak) {
-    //     this.lastPeak = this.currentPeak;
-    //   }
-    // }
-    // if (this.lastPeak > this.currentPeak) {
-    //   this.lastPeak -= 0.1;
-    //   this.material.uniforms.beat2.value = this.lastPeak;
-    //   if (this.lastPeak < this.currentPeak) {
-    //     this.lastPeak = this.currentPeak;
-    //   }
-    // }
-    // this.material.uniforms.beat2.value = THREE.MathUtils.lerp(
-    //   this.material.uniforms.beat2.value,
-    //   this.currentPeak,
-    //   0.01,
-    // );
 
     requestAnimationFrame(this.render.bind(this));
     this.renderer.render(this.scene, this.camera);

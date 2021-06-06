@@ -58,29 +58,13 @@ class BeatGetterProcessor extends AudioWorkletProcessor {
 
     this.processedBufferCount += 1;
 
-    // if (this.sixteenthCount >= 240 && this.sixteenthCount < 256) {
-    //   if (this.processedSampleCount * 0.5 >= BPM_IN_SAMPLES_164) {
-    //     this.port.postMessage(this.processedSampleCount);
-    //     this.processedSampleCount = 0;
-    //     this.processedBufferCount = 0;
-    //     this.sixteenthCount += 1;
-    //   }
-    // } else {
-    // if (this.processedSampleCount * 0.5 >= BPM_IN_SAMPLES_139) {
-    //   this.port.postMessage(this.processedSampleCount);
-    //   this.processedSampleCount = 0;
-    //   this.processedBufferCount = 0;
-    //   this.sixteenthCount += 1;
-    // }
-    // }
-
     return true;
   }
 }
 // 10.8 9.08
 // 101 ,87
 const BPM_IN_SAMPLES_139 = Math.floor(sampleRate * 10.8 * 0.01);
-console.log(BPM_IN_SAMPLES_139);
+// console.log(BPM_IN_SAMPLES_139);
 const BPM_IN_SAMPLES_164 = sampleRate * 8.8 * 0.01;
 const START_OFFSET = Math.floor(sampleRate * 48.5 * 0.01);
 

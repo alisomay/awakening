@@ -16,25 +16,4 @@ html, body {
 /* .app {
   width:100vw;
 }  */
-.mob {
-  color:white;
-  font-size:100px;
-  margin-top:500px;
-  text-align: center;
-}
-
-.loading {
-  position: absolute;
-  z-index: 99999999;
-  left: 50%;
-  margin-left: -100px;
-  top: 50%;
-  margin-top: -100px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: #E65E5E;
-  color: #E65E5E;
-  transform: scale(1.0);
-}
 

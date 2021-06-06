@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { ReplayButton } from '../replay-button/ReplayButton';
 import { ProgressBar } from '../progress-bar/ProgressBar';
@@ -15,9 +14,6 @@ export const Controls = ({
   player,
   handleReplayButtonClick,
 }) => {
-  useEffect(() => {}, []);
-
-  const classes = useStyles();
   if (replay) {
     return <ReplayButton handleClick={handleReplayButtonClick} />;
   } else {

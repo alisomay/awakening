@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import ReplayIcon from '@material-ui/icons/Replay';
-import Icon from '@material-ui/core/Icon';
-import { GamesSharp } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   imageIcon: {

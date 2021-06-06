@@ -5,24 +5,28 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
     margin: 'auto',
     backgroundColor: '#000',
+    height: '100vh',
   },
   headline: {
+    alignSelf: 'center',
     color: '#E65E5E',
     fontFamily: 'GrandSlang-Roman',
-    fontSize: 36,
-    paddingTop: 70,
+    fontSize: 47,
+    paddingTop: 90,
     paddingBottom: 0,
+    marginBottom: -30,
     marginLeft: 3,
   },
 
   annotate: {
-    marginTop: 50,
-    fontSize: 18,
+    alignSelf: 'center',
+    marginTop: 100,
+    fontSize: 24,
     textAlign: 'center',
     lineHeight: 1.18,
     letterSpacing: 0.8,
@@ -30,14 +34,15 @@ const useStyles = makeStyles((theme) => ({
     color: '#C7C9CC',
   },
   back: {
+    alignSelf: 'center',
     '&:hover': {
       cursor: 'pointer',
     },
-    marginTop: 70,
-    marginLeft: 0,
-    width: '50%',
+    marginTop: 85,
+    marginLeft: 15,
+    width: 270,
+    //
     paddingBottom: 60,
-
     '& img': {
       width: '100%',
       minWidth: '100%',
@@ -46,8 +51,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    marginTop: 100,
-    width: '46%',
+    alignSelf: 'center',
+    marginTop: 40,
+    width: 270,
 
     '& img': {
       width: '100%',
@@ -56,9 +62,14 @@ const useStyles = makeStyles((theme) => ({
       height: 'auto',
     },
   },
+  link: {
+    alignSelf: 'center',
+    color: '#E65E5E',
+    fontWeight: '300',
+  },
 }));
 
-export const MobileBlock = () => {
+export const BrowserBlock = () => {
   const classes = useStyles();
   const [imgSrc, setImgSrc] = useState('public/img/back-melon.png');
   return (
@@ -68,11 +79,28 @@ export const MobileBlock = () => {
       </div>
       <h1 className={classes.headline}>AWAKENING</h1>
       <p className={classes.annotate}>
-        Sorry, this experience
-        <br /> only runs on
-        <br /> desktop devices.
+        Sorry, please use{' '}
+        <span className={classes.link}>
+          <a href="https://www.google.com/chrome/">Google Chrome</a>
+        </span>
+        <br /> or{' '}
+        <span className={classes.link}>
+          <a href="https://www.mozilla.org/en-US/firefox/new/">
+            Mozilla Firefox{' '}
+          </a>
+        </span>
+        to view this experience.
       </p>
-      <a href="https://rozyuen.com" className={classes.back}>
+      <a
+        href="https://rozyuen.com"
+        onMouseEnter={() => {
+          setImgSrc('public/img/back-grey.png');
+        }}
+        onMouseLeave={() => {
+          setImgSrc('public/img/back-melon.png');
+        }}
+        className={classes.back}
+      >
         <img src={imgSrc} alt="back_button" />
       </a>
     </div>

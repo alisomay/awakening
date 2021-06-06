@@ -16,7 +16,7 @@ export const ProgressBar = ({ player }) => {
     currentOffset,
   ) => {
     const percentage = (currentOffset / totalLength) * 100;
-    console.log(`Elapsed: ${percentage}%`);
+    // console.log(`Elapsed: ${percentage}%`);
     setProgressBarValue(percentage);
   };
   player.attachDurationListener({
@@ -25,7 +25,7 @@ export const ProgressBar = ({ player }) => {
   });
   const setProgressBarValueOnChange = (value, updatePlayer) => {
     setProgressBarValue(value);
-    if (updatePlayer) console.log(`Jumping to offset ${value}`);
+    // if (updatePlayer) console.log(`Jumping to offset ${value}`);
   };
   const ProgressBarSlider = withStyles({
     root: {
@@ -74,12 +74,12 @@ export const ProgressBar = ({ player }) => {
       className={classes.slider}
       value={progressBarValue > 100 ? 0 : progressBarValue}
       onChangeCommitted={(_, value) => {
-        console.log('com', value);
+        // console.log('com', value);
         setProgressBarValueOnChange(value, true);
       }}
       disabled
       onChange={(_, value) => {
-        console.log('norm', value);
+        // console.log('norm', value);
         setProgressBarValueOnChange(value);
       }}
     />

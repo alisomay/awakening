@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,7 +84,7 @@ export const Credits = ({ index, show }) => {
             <div className={classes.creditContainer}>
               <p className={classes.lineFirst}>
                 <span className={classes.role}>
-                  Performer/Composer/Co-Producer/Co-Mix Engineer
+                  {'Performer/Composer/Producer'}
                 </span>
                 <br />
                 <span className={classes.name}>
@@ -94,7 +93,7 @@ export const Credits = ({ index, show }) => {
               </p>
               <p className={classes.line}>
                 <span className={classes.role}>
-                  Co-Mix Engineer/Co-Producer:
+                  {'Mix Engineer (Original Track):'}
                 </span>
                 <br />
                 <span className={classes.name}>
@@ -102,19 +101,19 @@ export const Credits = ({ index, show }) => {
                 </span>
               </p>
               <p className={classes.line}>
-                <span className={classes.role}>Mastering</span>
-                <br />
-                <span className={classes.name}>
-                  {`Philip Röder (Copilco Productions)`.toUpperCase()}
-                </span>
-              </p>
-              <p className={classes.line}>
                 <span className={classes.role}>
-                  Art Direction and Video Content Creator
+                  {'Mix Engineer (Binaural Version):'}
                 </span>
                 <br />
                 <span className={classes.name}>
                   {`Roz Yuen`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>Mastering</span>
+                <br />
+                <span className={classes.name}>
+                  {`Philip Röder (Copilco Productions)`.toUpperCase()}
                 </span>
               </p>
             </div>
@@ -125,7 +124,14 @@ export const Credits = ({ index, show }) => {
           <div className={classes.root}>
             <div className={classes.creditContainer}>
               <p className={classes.lineFirst}>
-                <span className={classes.role}>Visual Designer</span>
+                <span className={classes.role}>Art Direction</span>
+                <br />
+                <span className={classes.name}>
+                  {`Roz Yuen and Başak Ünal`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>Digital Artist</span>
                 <br />
                 <span className={classes.name}>
                   {`Başak Ünal`.toUpperCase()}
@@ -133,27 +139,11 @@ export const Credits = ({ index, show }) => {
               </p>
               <p className={classes.line}>
                 <span className={classes.role}>
-                  Audiovisual Artist/Creative Technologist (TBC)
+                  {'Developer/Creative Technologist'}
                 </span>
-                <br />
-                <span className={classes.name}>
-                  {`Someone someone`.toUpperCase()}
-                </span>
-              </p>
-              <p className={classes.line}>
-                <span className={classes.role}>TBC</span>
                 <br />
                 <span className={classes.name}>
                   {`Ali Somay`.toUpperCase()}
-                </span>
-              </p>
-              <p className={classes.line}>
-                <span className={classes.role}>
-                  Art Direction and Video Content Creator
-                </span>
-                <br />
-                <span className={classes.name}>
-                  {`Roz Yuen`.toUpperCase()}
                 </span>
               </p>
               <p className={classes.line}>

@@ -1,32 +1,26 @@
 import $ from 'jquery';
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect } from 'react';
 import './reset.css';
 import './App.css';
 import { Experience } from './experience/Experience';
-import { Credits } from './credits/Credits';
+
 import { World } from './experience/World';
 import { Intro } from './intro/Intro';
 import { MobileBlock } from './mobile-block/MobileBlock';
-import { Controls } from './controls/Controls';
+import { BrowserBlock } from './browser-block/BrowserBlock';
+
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile,
+  isChrome,
+  isFirefox,
 } from 'react-device-detect';
 
 // let lastCreditIndex = 0;
 export const App = () => {
-  // return <div className="mob">RENDERS</div>;
   const refToExperienceMain = React.createRef();
   const refToStartButton = React.createRef();
   const [init, setInit] = React.useState(false);
-  const [creditIndex, setCreditIndex] = React.useState(0);
 
   const initExperience = (threeRef, videoRef, player) => {
     const world = new World({
@@ -40,13 +34,6 @@ export const App = () => {
     world.setupListeners();
     return world;
   };
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     lastCreditIndex = (lastCreditIndex + 1) % 4;
-  //     setCreditIndex(lastCreditIndex);
-  //   }, 1720);
-  // }, []);
 
   useEffect(() => {
     const startButton = refToStartButton.current;
@@ -78,24 +65,104 @@ export const App = () => {
 
     return () => {};
   }, []);
+  useEffect(() => {
+    console.log(
+      '%cRoz Yuen - Awakening',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cPerformer/Composer/Producer',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cRoz Yuen',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cMix Engineer (Original Track):',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cAndrew Hockey',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cMix Engineer (Binaural Version):',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cRoz Yuen',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cMastering',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cPhilip Röder (Copilco Productions)',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cArt Direction',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cRoz Yuen and Başak Ünal',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cDigital Artist',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cBaşak Ünal',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cDeveloper/Creative Technologist',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cAli Somay',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cThis project was funded by',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+    console.log(
+      '%cMusikfonds e.V.',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+    );
+  }, []);
 
-  return (
-    <div className="app">
-      <BrowserView>
-        <Intro ref={refToStartButton}></Intro>
-        <Experience
-          ref={refToExperienceMain}
-          initExperience={initExperience}
-          init={init}
-        ></Experience>
-      </BrowserView>
-      <MobileView>
-        <MobileBlock></MobileBlock>
-      </MobileView>
-      {/* <Controls replay={true}></Controls> */}
-    </div>
-  );
-
-  // return <Experience></Experience>;
-  // return <Credits index={creditIndex}></Credits>;
+  if (isChrome || isFirefox) {
+    return (
+      <div className="app">
+        <BrowserView>
+          <Intro ref={refToStartButton}></Intro>
+          <Experience
+            ref={refToExperienceMain}
+            initExperience={initExperience}
+            init={init}
+          ></Experience>
+        </BrowserView>
+        <MobileView>
+          <MobileBlock></MobileBlock>
+        </MobileView>
+      </div>
+    );
+  } else {
+    // Don't allow
+    return (
+      <div className="app">
+        <BrowserView>
+          <BrowserBlock></BrowserBlock>
+        </BrowserView>
+        <MobileView>
+          <MobileBlock></MobileBlock>
+        </MobileView>
+      </div>
+    );
+  }
 };
