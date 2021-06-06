@@ -151,7 +151,6 @@ export class World {
       this.mouseMove.bind(this),
       false,
     );
-    window.addEventListener('click', this.click.bind(this), false);
   }
 
   resize() {

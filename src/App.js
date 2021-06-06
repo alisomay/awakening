@@ -68,71 +68,71 @@ export const App = () => {
   useEffect(() => {
     console.log(
       '%cRoz Yuen - Awakening',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:4rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:4rem;font-weight:bold',
     );
     console.log(
       '%cPerformer/Composer/Producer',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cRoz Yuen',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cMix Engineer (Original Track):',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cAndrew Hockey',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cMix Engineer (Binaural Version):',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cRoz Yuen',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cMastering',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cPhilip Röder (Copilco Productions)',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cArt Direction',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cRoz Yuen and Başak Ünal',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cDigital Artist',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cBaşak Ünal',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cDeveloper/Creative Technologist',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cAli Somay',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cThis project was funded by',
-      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
       '%cMusikfonds e.V.',
-      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;-webkit-text-stroke: 1px black;font-weight:bold',
+      'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
   }, []);
 
