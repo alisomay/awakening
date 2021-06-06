@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import fragment from '../../public/shader/fragment.frag';
 import vertex from '../../public/shader/vertex.vert';
 import tex1 from '../../public/img/NanoTextile.png';
+import { GamesSharp } from '@material-ui/icons';
 
 export class World {
   constructor(options) {
@@ -59,7 +60,7 @@ export class World {
         //this.material.uniforms.uDisplacement.value = peak;
         //7
         if (this.faceVisible) {
-          this.material.uniforms.uDisplacementMultiplier.value = 1.0;
+          this.material.uniforms.uDisplacementMultiplier.value = 0.0;
         } else {
           let max = 3.2;
           let val = 7 + peak / 4;
@@ -227,7 +228,7 @@ export class World {
         },
         uRayMaxDistance: {
           type: 'f',
-          value: 100.0,
+          value: 1.0,
         },
         uLightPos: {
           type: 'v3',
@@ -259,6 +260,14 @@ export class World {
     this.geometry = new THREE.PlaneGeometry(1, 1, 1, 1);
     this.plane = new THREE.Mesh(this.geometry, this.material);
     this.scene.add(this.plane);
+  }
+
+  animationTimelineStart() {
+    gsap.to(this.material.uniforms.uRayMaxDistance, {
+      duration: 20,
+      value: 100.0,
+      ease: 'sine.inOut',
+    });
   }
 
   stop() {

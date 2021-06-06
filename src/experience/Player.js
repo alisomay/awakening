@@ -93,6 +93,7 @@ export class Player {
     this.sixteenthCounter = 0;
     this.barCounter = 0;
     this.beatCounter = 0;
+    console.log(this.ctx.audioWorklet);
     this.ctx.audioWorklet
       .addModule(
         new AudioWorklet(new URL('./BeatGetter.js', import.meta.url)),
@@ -248,6 +249,8 @@ export class Player {
     this.beatCounter = 0;
     this.sixteenthCounter = 0;
     if (this.source) {
+      this.beatGetterWorkletNode.disconnect();
+      this.analyser.disconnect();
       this.source.disconnect();
       this.source.stop(0);
       this.source = null;

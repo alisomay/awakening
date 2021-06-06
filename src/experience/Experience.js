@@ -135,6 +135,7 @@ export const Experience = React.forwardRef(
               $('#loading').fadeOut();
               tl.pause();
               world.play();
+              world.animationTimelineStart();
               player.play();
               setTimeout(() => {
                 gsap.to('canvas', {
