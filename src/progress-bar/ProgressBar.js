@@ -49,11 +49,13 @@ export const ProgressBar = ({ player }) => {
       left: 'calc(-50% + 4px)',
     },
     track: {
+      color: '#E65E5E',
       height: 4,
       borderRadius: 4,
       transition: 'width 0.5s linear !important',
     },
     rail: {
+      color: '#fff',
       height: 4,
       borderRadius: 4,
     },

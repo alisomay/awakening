@@ -40,6 +40,7 @@ export class World {
     this.player.attachLifeCycleListener(
       'onBar',
       (levels, barCount) => {
+        console.log('BAR : ', barCount);
         if (barCount >= 20 && barCount < 23) {
           this.faceVisible = true;
         } else if (barCount >= 38 && barCount < 47) {
@@ -130,6 +131,13 @@ export class World {
     // 'negz.jpg',
   }
 
+  scale(unscaledNum, minAllowed, maxAllowed, min, max) {
+    return (
+      ((maxAllowed - minAllowed) * (unscaledNum - min)) /
+        (max - min) +
+      minAllowed
+    );
+  }
   setupListeners() {
     window.addEventListener('resize', this.resize.bind(this));
     window.addEventListener(
@@ -148,16 +156,37 @@ export class World {
     this.camera.updateProjectionMatrix();
   }
   mouseMove(event) {
+    this.mouse.x = this.scale(
+      event.clientX / window.innerWidth,
+      -1,
+      1,
+      0,
+      1,
+    );
+    this.mouse.y = this.scale(
+      event.clientY / window.innerHeight,
+      -1,
+      1,
+      0,
+      1,
+    );
     // calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
-    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    // console.log(this.mouse.x, this.mouse.y);
-    this.material.uniforms.mouse.value = new THREE.Vector2(
-      (event.clientX / window.innerWidth) * 2 - 1,
-      -(event.clientY / window.innerHeight) * 2 + 1,
+    // this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    // this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // // console.log(this.mouse.x, this.mouse.y);
+    // this.material.uniforms.mouse.value = new THREE.Vector2(
+    //   (event.clientX / window.innerWidth) * 2 - 1,
+    //   -(event.clientY / window.innerHeight) * 2 + 1,
+    // );
+    this.material.uniforms.uRotation.value = new THREE.Vector3(
+      // (event.clientX / window.innerWidth) * 2 - 0.2,
+      // -(event.clientY / window.innerHeight) * 2 + 0.2,
+      this.mouse.x * 20,
+      0.0,
+      this.mouse.y * 20,
     );
-    //console.log((event.clientX / window.innerWidth) * 2 - 1);
+    // console.log('HEY,', this.mouse.y);
   }
 
   click(click) {

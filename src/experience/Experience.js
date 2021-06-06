@@ -6,14 +6,15 @@ import { Player } from './Player';
 import { Controls } from '../controls/Controls';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-
+import $ from 'jquery';
 import {
   BrowserView,
   MobileView,
   isBrowser,
   isMobile,
 } from 'react-device-detect';
-
+import { GamesSharp } from '@material-ui/icons';
+var tl = gsap.timeline({ repeat: 90, yoyo: true, paused: true });
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -63,27 +64,7 @@ export const Experience = React.forwardRef(
     const threeRef = useRef(null);
     const videoRef = useRef(null);
 
-    const videos = [
-      `public/video/mix-video.mp4`,
-      // `video/basak_test_1.mp4`,
-      // `video/basak_test_2.mp4`,
-      // `video/Roz_01.webm`,
-      // `video/Roz_02.webm`,
-      // `video/Roz_03.webm`,
-      // `video/Roz_04.webm`,
-      // `video/Roz_05.webm`,
-      // `video/Roz_06.webm`,
-      // `video/Roz_07.webm`,
-      // `video/Roz_08.webm`,
-      // `video/Roz_09.webm`,
-      // `video/Roz_10.webm`,
-      // `video/Roz_11.webm`,
-      // `video/Roz_12.webm`,
-      // `video/Train_01.webm`,
-      // `video/Train_02.webm`,
-      // `video/Train_03.webm`,
-      // `video/Train_04.webm`,
-    ];
+    const videos = [`public/video/awakening.mp4`];
     const [videoIdx, setVideoIdx] = useState(0);
     const [replay, setReplay] = useState(false);
     const [bcVisibility, setBcVisibility] = useState(false);
@@ -109,7 +90,7 @@ export const Experience = React.forwardRef(
     };
     let spaceBarPressedBefore = false;
     const handleSpaceBar = () => {
-      player.socket.emit('space');
+      // player.socket.emit('space');
       if (spaceBarPressedBefore) {
         console.log('');
         if (player) {
@@ -135,13 +116,38 @@ export const Experience = React.forwardRef(
 
     useEffect(() => {
       if (init) {
-        const world = initExperience.call(
-          null,
-          threeRef,
-          videoRef,
-          player,
-        );
-        world.play();
+        let tween = gsap.to('#loading', {
+          duration: 0.7,
+          scale: 0.1,
+          ease: 'sine.inOut',
+        });
+        tl.add(tween);
+        tl.play();
+        (function () {
+          setTimeout(() => {
+            if (player.audioLoaded) {
+              const world = initExperience.call(
+                null,
+                threeRef,
+                videoRef,
+                player,
+              );
+              $('#loading').fadeOut();
+              tl.pause();
+              world.play();
+              player.play();
+              setTimeout(() => {
+                gsap.to('canvas', {
+                  duration: 2,
+                  opacity: 1.0,
+                  ease: 'power3.out',
+                });
+              }, 1000);
+            } else {
+              this();
+            }
+          }, 2000);
+        })();
       }
     }, [init]);
 
@@ -172,13 +178,13 @@ export const Experience = React.forwardRef(
       );
 
       player.attachLifeCycleListener('onBeat', (avgPeak) => {
-        // setBcVisibility(
-        //   `rgb(${Math.random() * 255},${Math.random() * 255},${
-        //     Math.random() * 255
-        //   })`,
-        // );
-        // const [avg, peak] = avgPeak;
-        // setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
+        setBcVisibility(
+          `rgb(${Math.random() * 255},${Math.random() * 255},${
+            Math.random() * 255
+          })`,
+        );
+        const [avg, peak] = avgPeak;
+        setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
       });
       return () => {
         // Maybe removal of listeners might be needed
@@ -206,7 +212,9 @@ export const Experience = React.forwardRef(
                 // videoRef.current.load();
               }
             }}
-          ></div>
+          >
+            <div id="loading"></div>
+          </div>
           <div
             style={{
               width: '100px',

@@ -66,6 +66,8 @@ export const App = () => {
           $('html, body')
             .css('overflow-x', 'hidden')
             .css('overflow-y', 'hidden');
+
+          $('#loading').fadeIn();
           // Scroll Complete
           // Start exp
           // If we want to change url it is here

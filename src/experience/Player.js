@@ -2,7 +2,7 @@ import { AudioWorklet } from 'audio-worklet';
 import io from 'socket.io-client';
 export class Player {
   constructor(url) {
-    this.socket = io(`http://localhost:3000`);
+    // this.socket = io(`http://localhost:3000`);
     this.buf;
     this.onEnded = () => {
       this.stop();
@@ -115,7 +115,7 @@ export class Player {
           if (this.sixteenthCounter) {
             if (!(this.sixteenthCounter % 4)) {
               // Every beat, 139 BPM.
-              this.socket.emit(`beat`);
+              // this.socket.emit(`beat`);
               this.onBeatCallbacks.forEach((cb) => {
                 cb(this.analyse());
               });
