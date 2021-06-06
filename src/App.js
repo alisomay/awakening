@@ -12,6 +12,7 @@ import { Credits } from './credits/Credits';
 import { World } from './experience/World';
 import { Intro } from './intro/Intro';
 import { MobileBlock } from './mobile-block/MobileBlock';
+import { Controls } from './controls/Controls';
 import {
   BrowserView,
   MobileView,
@@ -91,6 +92,7 @@ export const App = () => {
       <MobileView>
         <MobileBlock></MobileBlock>
       </MobileView>
+      {/* <Controls replay={true}></Controls> */}
     </div>
   );
 

@@ -31,6 +31,7 @@ export class World {
       1000,
     );
 
+    this.replaying = false;
     this.camera.position.set(0, 0, 0.01);
     this.time = 0;
     this.isPlaying = true;
@@ -38,22 +39,57 @@ export class World {
 
     this.faceVisible = false;
 
+    this.player.attachLifeCycleListener('onEnded', () => {
+      this.faceVisible = false;
+      this.material.uniforms.beat1.value = 1.0;
+      this.material.uniforms.beat2.value = 1.0;
+      this.material.uniforms.uRotation.value = new THREE.Vector3(
+        0.0,
+        0.0,
+        0.0,
+      );
+      this.material.uniforms.uDisplacementMultiplier.value = 1.0;
+      this.material.uniforms.uDistanceToOrigin.value = 1;
+      this.material.uniforms.uLightIntensity.value = 0.0;
+      this.material.uniforms.uRayMaxDistance.value = 1.0;
+      this.material.uniforms.uLightPos.value = new THREE.Vector3(
+        -0.14,
+        0.1,
+        0.4,
+      );
+    });
     this.player.attachLifeCycleListener(
       'onBar',
       (levels, barCount) => {
         console.log('BAR : ', barCount);
-        if (barCount >= 20 && barCount < 23) {
-          this.faceVisible = true;
-        } else if (barCount >= 38 && barCount < 47) {
-          this.faceVisible = true;
-        } else if (barCount >= 49 && barCount < 52) {
-          this.faceVisible = true;
-        } else if (barCount >= 68 && barCount < 77) {
-          this.faceVisible = true;
-        } else if (barCount >= 98 && barCount < 106) {
-          this.faceVisible = true;
+        if (!this.replaying) {
+          if (barCount >= 20 && barCount < 23) {
+            this.faceVisible = true;
+          } else if (barCount >= 38 && barCount < 47) {
+            this.faceVisible = true;
+          } else if (barCount >= 49 && barCount < 52) {
+            this.faceVisible = true;
+          } else if (barCount >= 68 && barCount < 77) {
+            this.faceVisible = true;
+          } else if (barCount >= 98 && barCount < 106) {
+            this.faceVisible = true;
+          } else {
+            this.faceVisible = false;
+          }
         } else {
-          this.faceVisible = false;
+          if (barCount >= 19 && barCount < 23) {
+            this.faceVisible = true;
+          } else if (barCount >= 37 && barCount < 47) {
+            this.faceVisible = true;
+          } else if (barCount >= 48 && barCount < 52) {
+            this.faceVisible = true;
+          } else if (barCount >= 67 && barCount < 77) {
+            this.faceVisible = true;
+          } else if (barCount >= 98 && barCount < 106) {
+            this.faceVisible = true;
+          } else {
+            this.faceVisible = false;
+          }
         }
 
         const [avg, peak] = levels;
@@ -264,7 +300,7 @@ export class World {
 
   animationTimelineStart() {
     gsap.to(this.material.uniforms.uRayMaxDistance, {
-      duration: 20,
+      duration: 30,
       value: 100.0,
       ease: 'sine.inOut',
     });
@@ -274,7 +310,10 @@ export class World {
     this.isPlaying = false;
   }
 
-  play() {
+  play(replay) {
+    if (replay) {
+      this.replaying = true;
+    }
     if (!this.isPlaying) {
       this.video.play();
       this.render();

@@ -4,6 +4,10 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    zIndex: 9999,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -43,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     marginTop: '20vh',
-    width: 400,
+    width: 270,
     alignSelf: 'center',
     '& img': {
       width: '100%',
@@ -54,112 +58,116 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const Credits = ({ index }) => {
+export const Credits = ({ index, show }) => {
   const classes = useStyles();
 
-  switch (index) {
-    case 3:
-      return (
-        <div className={classes.root}>
-          <div className={classes.logo}>
-            <img src="img/logo.png" alt="logo" />
+  if (!show) {
+    return <div style={{ display: 'none' }}></div>;
+  } else {
+    switch (index) {
+      case 3:
+        return (
+          <div className={classes.root}>
+            <div className={classes.logo}>
+              <img src="public/img/logo.png" alt="logo" />
+            </div>
           </div>
-        </div>
-      );
-    case 0:
-      return (
-        <div className={classes.root}>
-          <h1 className={classes.headline}>AWAKENING</h1>
-        </div>
-      );
-    case 1:
-      return (
-        <div className={classes.root}>
-          <div className={classes.creditContainer}>
-            <p className={classes.lineFirst}>
-              <span className={classes.role}>
-                Performer/Composer/Co-Producer/Co-Mix Engineer
-              </span>
-              <br />
-              <span className={classes.name}>
-                {`Roz Yuen`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>
-                Co-Mix Engineer/Co-Producer:
-              </span>
-              <br />
-              <span className={classes.name}>
-                {`Andrew Hockey`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>Mastering</span>
-              <br />
-              <span className={classes.name}>
-                {`Philip Röder (Copilco Productions)`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>
-                Art Direction and Video Content Creator
-              </span>
-              <br />
-              <span className={classes.name}>
-                {`Roz Yuen`.toUpperCase()}
-              </span>
-            </p>
+        );
+      case 0:
+        return (
+          <div className={classes.root}>
+            <h1 className={classes.headline}>AWAKENING</h1>
           </div>
-        </div>
-      );
-    case 2:
-      return (
-        <div className={classes.root}>
-          <div className={classes.creditContainer}>
-            <p className={classes.lineFirst}>
-              <span className={classes.role}>Visual Designer</span>
-              <br />
-              <span className={classes.name}>
-                {`Başak Ünal`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>
-                Audiovisual Artist/Creative Technologist (TBC)
-              </span>
-              <br />
-              <span className={classes.name}>
-                {`Someone someone`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>TBC</span>
-              <br />
-              <span className={classes.name}>
-                {`Ali Somay`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>
-                Art Direction and Video Content Creator
-              </span>
-              <br />
-              <span className={classes.name}>
-                {`Roz Yuen`.toUpperCase()}
-              </span>
-            </p>
-            <p className={classes.line}>
-              <span className={classes.role}>
-                This project was funded by
-              </span>
-              <br />
-              <span className={classes.name}>
-                {`Musikfonds e.V.`.toUpperCase()}
-              </span>
-            </p>
+        );
+      case 1:
+        return (
+          <div className={classes.root}>
+            <div className={classes.creditContainer}>
+              <p className={classes.lineFirst}>
+                <span className={classes.role}>
+                  Performer/Composer/Co-Producer/Co-Mix Engineer
+                </span>
+                <br />
+                <span className={classes.name}>
+                  {`Roz Yuen`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>
+                  Co-Mix Engineer/Co-Producer:
+                </span>
+                <br />
+                <span className={classes.name}>
+                  {`Andrew Hockey`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>Mastering</span>
+                <br />
+                <span className={classes.name}>
+                  {`Philip Röder (Copilco Productions)`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>
+                  Art Direction and Video Content Creator
+                </span>
+                <br />
+                <span className={classes.name}>
+                  {`Roz Yuen`.toUpperCase()}
+                </span>
+              </p>
+            </div>
           </div>
-        </div>
-      );
+        );
+      case 2:
+        return (
+          <div className={classes.root}>
+            <div className={classes.creditContainer}>
+              <p className={classes.lineFirst}>
+                <span className={classes.role}>Visual Designer</span>
+                <br />
+                <span className={classes.name}>
+                  {`Başak Ünal`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>
+                  Audiovisual Artist/Creative Technologist (TBC)
+                </span>
+                <br />
+                <span className={classes.name}>
+                  {`Someone someone`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>TBC</span>
+                <br />
+                <span className={classes.name}>
+                  {`Ali Somay`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>
+                  Art Direction and Video Content Creator
+                </span>
+                <br />
+                <span className={classes.name}>
+                  {`Roz Yuen`.toUpperCase()}
+                </span>
+              </p>
+              <p className={classes.line}>
+                <span className={classes.role}>
+                  This project was funded by
+                </span>
+                <br />
+                <span className={classes.name}>
+                  {`Musikfonds e.V.`.toUpperCase()}
+                </span>
+              </p>
+            </div>
+          </div>
+        );
+    }
   }
 };

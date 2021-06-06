@@ -4,12 +4,15 @@ export class Player {
   constructor(url) {
     // this.socket = io(`http://localhost:3000`);
     this.buf;
-    this.onEnded = () => {
-      this.stop();
-    };
+    this.onEndedCallbacks = [
+      () => {
+        this.stop();
+      },
+    ];
     this.onStop = () => {};
     this.onStart = () => {};
     this.onPause = () => {};
+    this.onCredits = () => {};
     this.onBarCallbacks = [];
     this.onHalfBarCallbacks = [];
     this.onBeatCallbacks = [];
@@ -57,7 +60,7 @@ export class Player {
   attachLifeCycleListener(type, callback) {
     switch (type) {
       case 'onEnded':
-        this.onEnded = callback;
+        this.onEndedCallbacks.push(callback);
         break;
       case 'onStop':
         this.onStop = callback;
@@ -83,13 +86,18 @@ export class Player {
       case 'onSixteenth':
         this.onSixteenthCallbacks.push(callback);
         break;
+      case 'onCredits':
+        this.onCredits = callback;
+        break;
     }
   }
 
   init() {
     console.log('Init');
   }
-  play() {
+  play(replaying) {
+    this.worldRef.play(replaying);
+    this.worldRef.animationTimelineStart();
     this.sixteenthCounter = 0;
     this.barCounter = 0;
     this.beatCounter = 0;
@@ -135,6 +143,23 @@ export class Player {
               this.onBarCallbacks.forEach((cb) => {
                 cb(this.analyse(), this.barCounter);
               });
+              // Credits
+
+              if (this.barCounter === 107) {
+                this.onCredits();
+                // console.log(this.setCreditIndex);
+                this.setCreditIndex(0);
+              }
+              if (this.barCounter === 108) {
+                this.setCreditIndex(1);
+              }
+              if (this.barCounter === 110) {
+                this.setCreditIndex(2);
+              }
+              if (this.barCounter === 112) {
+                this.setCreditIndex(3);
+              }
+
               this.barCounter += 1;
             }
             if (!(this.sixteenthCounter % 8)) {
@@ -165,10 +190,14 @@ export class Player {
             this.ctx.currentTime,
           );
           if (this.paused) {
-            this.onEnded(this.paused);
+            this.onEndedCallbacks.forEach((cb) => {
+              cb(this.paused);
+            });
           } else {
             this.stop();
-            this.onEnded();
+            this.onEndedCallbacks.forEach((cb) => {
+              cb();
+            });
           }
         };
 

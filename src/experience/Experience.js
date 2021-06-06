@@ -4,6 +4,7 @@ import './Experience.css';
 import { World } from './World';
 import { Player } from './Player';
 import { Controls } from '../controls/Controls';
+import { Credits } from '../credits/Credits';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import $ from 'jquery';
@@ -13,7 +14,7 @@ import {
   isBrowser,
   isMobile,
 } from 'react-device-detect';
-import { GamesSharp } from '@material-ui/icons';
+
 var tl = gsap.timeline({ repeat: 90, yoyo: true, paused: true });
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,8 @@ export const Experience = React.forwardRef(
     const [replay, setReplay] = useState(false);
     const [bcVisibility, setBcVisibility] = useState(false);
     const [avgPeak, setAvgPeak] = useState('');
+    const [showCredits, setShowCredits] = useState(false);
+    const [creditIndex, setCreditIndex] = useState(0);
 
     player.attachLifeCycleListener('onEnded', (paused) => {
       if (!paused) {
@@ -83,10 +86,18 @@ export const Experience = React.forwardRef(
       videoRef.current.play();
     });
 
+    player.attachLifeCycleListener('onCredits', () => {
+      setShowCredits(true);
+    });
+
+    player.setCreditIndex = setCreditIndex.bind(this);
+
     const handleReplayButtonClick = () => {
       setReplay(false);
+      setShowCredits(false);
+      setCreditIndex(0);
       replayGlobal = false;
-      player.play();
+      player.play(true);
     };
     let spaceBarPressedBefore = false;
     const handleSpaceBar = () => {
@@ -95,14 +106,14 @@ export const Experience = React.forwardRef(
         console.log('');
         if (player) {
           if (player.playing() && player.ready()) {
-            player.pause();
+            // player.pause();
             spaceBarPressedBefore = false;
           }
         }
       } else {
         if (player) {
           if (!player.playing() && player.ready()) {
-            player.play();
+            // player.play();
             spaceBarPressedBefore = true;
           }
         }
@@ -134,8 +145,7 @@ export const Experience = React.forwardRef(
               );
               $('#loading').fadeOut();
               tl.pause();
-              world.play();
-              world.animationTimelineStart();
+              player.worldRef = world;
               player.play();
               setTimeout(() => {
                 gsap.to('canvas', {
@@ -179,13 +189,13 @@ export const Experience = React.forwardRef(
       );
 
       player.attachLifeCycleListener('onBeat', (avgPeak) => {
-        setBcVisibility(
-          `rgb(${Math.random() * 255},${Math.random() * 255},${
-            Math.random() * 255
-          })`,
-        );
-        const [avg, peak] = avgPeak;
-        setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
+        // setBcVisibility(
+        //   `rgb(${Math.random() * 255},${Math.random() * 255},${
+        //     Math.random() * 255
+        //   })`,
+        // );
+        // const [avg, peak] = avgPeak;
+        // setAvgPeak(`AVG : ${avg} PEAK : ${peak}`);
       });
       return () => {
         // Maybe removal of listeners might be needed
@@ -215,6 +225,7 @@ export const Experience = React.forwardRef(
             }}
           >
             <div id="loading"></div>
+            <Credits index={creditIndex} show={showCredits}></Credits>
           </div>
           <div
             style={{
