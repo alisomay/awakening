@@ -1,4 +1,6 @@
 import { AudioWorklet } from 'audio-worklet';
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+
 export class Player {
   constructor(url) {
     this.buf;
@@ -18,6 +20,7 @@ export class Player {
     this.onSixteenthCallbacks = [];
     this.info = null;
     this.audioLoaded = false;
+
     this.ctx = new AudioContext();
     this.sixteenthCounter = 0;
     this.barCounter = 0;
