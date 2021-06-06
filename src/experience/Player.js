@@ -146,18 +146,18 @@ export class Player {
               });
               // Credits
 
-              if (this.barCounter === 107) {
+              if (this.barCounter === 105) {
                 this.onCredits();
                 // console.log(this.setCreditIndex);
                 this.setCreditIndex(0);
               }
-              if (this.barCounter === 108) {
+              if (this.barCounter === 106) {
                 this.setCreditIndex(1);
               }
-              if (this.barCounter === 111) {
+              if (this.barCounter === 109) {
                 this.setCreditIndex(2);
               }
-              if (this.barCounter === 114) {
+              if (this.barCounter === 112) {
                 this.setCreditIndex(3);
               }
 
