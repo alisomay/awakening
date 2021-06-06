@@ -15,6 +15,14 @@ import {
   isChrome,
   isFirefox,
 } from 'react-device-detect';
+const isSafari =
+  /constructor/i.test(window.HTMLElement) ||
+  (function (p) {
+    return p.toString() === '[object SafariRemoteNotification]';
+  })(
+    !window['safari'] ||
+      (typeof safari !== 'undefined' && safari.pushNotification),
+  );
 
 // let lastCreditIndex = 0;
 export const App = () => {
@@ -136,7 +144,7 @@ export const App = () => {
     );
   }, []);
 
-  if (isChrome || isFirefox) {
+  if ((isChrome || isFirefox) && !isSafari) {
     return (
       <div className="app">
         <BrowserView>
