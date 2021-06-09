@@ -148,7 +148,7 @@ export const Credits = ({ index, show }) => {
               </p>
               <p className={classes.line}>
                 <span className={classes.role}>
-                  This project was funded by
+                  This project was supported by
                 </span>
                 <br />
                 <span className={classes.name}>

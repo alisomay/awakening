@@ -202,17 +202,17 @@ export class Player {
           }
         };
 
-        console.log('______PLAY______');
-        console.log(
-          // this.source,
-          'STARTED AT:',
-          this.startedAt,
-          'PAUSED AT: ',
-          this.pausedAt,
-          'CURRENT TIME: ',
-          this.ctx.currentTime,
-        );
-        console.log('\n');
+        // console.log('______PLAY______');
+        // console.log(
+        //   // this.source,
+        //   'STARTED AT:',
+        //   this.startedAt,
+        //   'PAUSED AT: ',
+        //   this.pausedAt,
+        //   'CURRENT TIME: ',
+        //   this.ctx.currentTime,
+        // );
+        // console.log('\n');
 
         this.startedAt = this.ctx.currentTime - this.pausedAt;
         this.source.start(0, this.pausedAt);

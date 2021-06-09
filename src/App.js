@@ -135,7 +135,7 @@ export const App = () => {
       'color:#fff;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
-      '%cThis project was funded by',
+      '%cThis project was supported by',
       'color:#E65E5E;font-family:GrandSlang-Roman;font-size:1rem;font-weight:bold',
     );
     console.log(
